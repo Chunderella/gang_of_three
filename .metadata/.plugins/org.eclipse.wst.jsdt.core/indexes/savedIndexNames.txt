@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\bongc\Git\gang-of-three\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2348557174.index
+483569028.index
+1955618287.index
+2207892985.index
+4088966115.index
+552856622.index
