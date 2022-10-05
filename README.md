@@ -1,1 +1,0 @@
-# gang_of_three
