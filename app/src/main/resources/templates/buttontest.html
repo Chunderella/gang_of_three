@@ -1,0 +1,125 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EAT-F by Chunderella</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+        crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+       
+        <div class="col">
+        <div role="tabpanel">
+            <!-- List group -->
+            <div class="list-group" id="myList" role="tablist">
+              <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#home" role="tab">Home</a>
+              <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#profile" role="tab">Profile</a>
+              <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#messages" role="tab">Messages</a>
+              <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#settings" role="tab">Settings</a>
+            </div>
+          
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="home" role="tabpanel">
+                
+
+    <div id="partycontent">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-4 g-4 text-small">
+            <th:block th:each="party : ${parties}">
+              <div class="card" style="width: 20rem;" th:fragment="fragment-card">
+                <div class="cd-header">
+  
+                  <div class="line-2"></div>
+  
+                  <div class="card-head-container">
+                    <div class="row">
+                      <!--                        <div class="col-5"> 점심파티-->
+                      <div class="col-4" th:text="'[' + ${party.meal} + '파티]'">
+                      </div>
+                      <!--                          <div class="col-4"> 한식-->
+                      <div class="col-4" th:text="'[' + ${party.food} + ']'">
+                      </div>
+                      <!--                      <div class="col-3"> [4/8]-->
+                      <div class="col-4" th:text="'[' + '#' + '/' + ${party.limit} + ']'">
+                      </div>
+                    </div>
+  
+                    <div class="line-2"></div>
+  
+                  </div>
+                </div>
+  
+                <div class="tumbnail">
+                  <!--   th:src="${party.thumbnail} : 썸네일 주소가 담긴다
+                         th:src="@{/party/files/{path}(path=${party.thumnail})}"
+                                : /party/files/ -> 이미지가 담긴 경로
+                                : {path} 변수에 (path=${party.thumnail}) DB에 저장된 첨부파일 uuid로 변환된 이름을 가져온다 -->
+                  <a th:href="@{detail(no=${party.no})}"><img id="thumbNail"
+                                                              th:src="@{/party/files/{path}(path=${party.thumbnail})}"
+                                                              class="img-thumbnail" alt="이미지가 없습니다."></a>
+                </div>
+  
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${party.title}"></h5>
+                  <p class="card-text" th:text="${party.writer.nick}">작성자</p>
+                </div><!--card-body end-->
+  
+                <div class="cd-index bg-light">
+                  <div class="container">
+                    <div class="row justify-content-center">
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary"
+                                th:text="'[' + ${party.age} + '대]'"></button>
+                        <button type="button" class="btn btn-outline-primary"
+                                th:text="'[' + ${party.gender} + ']'"></button>
+                        <button type="button" class="btn btn-outline-primary"
+                                th:text="'[' + ${party.time} + '시]'"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="line-2"></div>
+  
+  
+              </div><!--card end-->
+            </th:block>
+          </div>
+        </div>
+      </div>
+
+              </div>
+              <div class="tab-pane" id="profile" role="tabpanel">..2.</div>
+              <div class="tab-pane" id="messages" role="tabpanel">.2..</div>
+              <div class="tab-pane" id="settings" role="tabpanel">.3..</div>
+             
+            
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+       
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+
+
+</body>
+</html>
