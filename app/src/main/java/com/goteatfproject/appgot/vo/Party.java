@@ -3,6 +3,7 @@ package com.goteatfproject.appgot.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Party {
 //  @DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 //  @JsonProperty("time")
 //  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+//  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 //  @JsonProperty("time")
 //  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
   private Date time;
