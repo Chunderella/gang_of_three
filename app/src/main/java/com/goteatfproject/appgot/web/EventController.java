@@ -1,7 +1,6 @@
 package com.goteatfproject.appgot.web;
 
-import com.goteatfproject.appgot.service.EventService;
-import com.goteatfproject.appgot.service.VolunteerService;
+import com.goteatfproject.appgot.service.*;
 import com.goteatfproject.appgot.vo.*;
 
 import java.io.File;
@@ -19,7 +18,6 @@ import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.goteatfproject.appgot.service.PartyService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/event/")
 public class EventController {
 
+
+//  TicketService ticketService;
+  MemberService memberService;
   EventService eventService;
   ServletContext sc;
 
@@ -200,5 +201,19 @@ public class EventController {
     }
     return "redirect:detail?no=" + event.getNo();
   }
+
+//  @RestController
+//  public String Map<String, >(int no) throws Exception {
+//    Event event = eventService.get(no);
+//    Ticket ticket = tecketService.get(no);
+//    Member member = memberService.get(no);
+//
+//    Map map = new HashMap();
+//    map.put("event", event);
+//    map.put("ticket", ticket);
+//    map.put("member", member);
+//    return map;
+//
+//  }
 
 }
