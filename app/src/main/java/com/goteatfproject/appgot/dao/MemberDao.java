@@ -10,6 +10,9 @@ public interface MemberDao {
 
   int insert(Member member);
 
+
+  public int idCheck(String id);
+
   Member findByNo(int no);
 
   List<Member> findAll();

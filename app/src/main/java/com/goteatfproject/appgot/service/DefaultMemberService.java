@@ -23,7 +23,14 @@ public class DefaultMemberService implements MemberService {
     return memberDao.findByNo(no);
   }
 
-  @Override
+    @Override
+    public int idCheck(String id) {
+        int cnt = memberDao.idCheck(id);
+        System.out.println("cnt: " + cnt);
+        return cnt;
+    }
+
+    @Override
   public Member get(String id, String password) throws Exception {
     return memberDao.findByEmailPassword(id, password);
   }

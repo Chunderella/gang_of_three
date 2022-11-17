@@ -42,7 +42,7 @@
       <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-4" role="search">
         <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
       </form>
-      인
+
       <!-------------------------------구분선-------------------------->
       <div class="col-2"></div>
 
@@ -134,7 +134,7 @@
 
       <!--1줄-->
       <div class="row p-3">
-        <div class="col-2"  th:text="'[' + ${party.meal} + '파티]'">왜 널일까
+        <div class="col-2"  th:text="'[' + ${party.meal} + '파티]'">
         </div>
         <div class="col-2" th:text="'[' + ${party.food} + ']'">
         </div>
@@ -153,7 +153,11 @@
 
       <!--2줄-->
       <div class="row p-3">
-        <div class="col"  th:text="${party.title}">
+        <div class="col">
+          <input name='title' type='text'
+                 value='제목'
+                 data-th-value='${party.title}'
+                 size='60'>
         </div>
       </div>
 
@@ -202,7 +206,29 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-outline-secondary">변경</button>
+<table>
+    <tr>
+      <th>첨부파일</th>
+      <td>
+        <ul>
+          <li data-th-each="file : ${party.attachedFiles}">
+            <!-- {path} = path=${file.filepath} -->
+            <a href=""
+               data-th-href="@{files/{path}(path=${file.filepath})}"
+               data-th-text="${file.filepath}">test.gif</a>
+            [<a href="fileDelete?no=1"
+                data-th-href="@{fileDelete(no=${file.no})}">파일삭제</a>]
+          </li>
+        </ul>
+        파일 추가: <input name='files' type="file" multiple>
+      </td>
+    </tr>
+</table>
+
+
+
+
+    <button type="submit" class="btn btn-outline-secondary">변경</button>
       <button type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>
 
       <h5>Comment : </h5>

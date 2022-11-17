@@ -10,6 +10,7 @@ import com.goteatfproject.appgot.vo.Party;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletContext;
 
@@ -32,8 +33,10 @@ EventService eventService;
   @GetMapping("/")
   public String List(Model model) throws Exception {
     model.addAttribute("parites",partyService.list());
-    model.addAttribute("events",eventService.list());
     model.addAttribute("feeds",feedService.list());
+    model.addAttribute("events",eventService.list());
     return "index";
   }
+
+
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div id="party-board" th:fragment="fragment-partyindex" >
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-9">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div th:replace="/common/card.html :: fragment-card"></div>
+
+                </div>
+            </div>
+            <!-------------------------------side--#center로 옮겨야함------------------------>
+            <div class="col-3">
+                <!-------------------------------구분선-------------------------->
+
+                <div th:replace="/common/sidecard.html :: fragment-sidecard"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</html>
