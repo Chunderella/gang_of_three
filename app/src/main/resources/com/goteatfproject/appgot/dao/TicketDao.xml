@@ -39,4 +39,8 @@
 <!--    limit 15;-->
 <!--  </select>-->
 
+
+<!--        insert into ticket(tno, mno, eno,pay,paycnt,cancel,price,paydate)-->
+<!--        values (55, 44, 5, "kakao" , 10, 0, 100000, now())-->
+
 <!--</mapper>-->

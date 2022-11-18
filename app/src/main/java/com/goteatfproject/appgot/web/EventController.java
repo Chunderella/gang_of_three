@@ -202,17 +202,9 @@ public class EventController {
     return "redirect:detail?no=" + event.getNo();
   }
 
-//  @RestController
-//  public String Map<String, >(int no) throws Exception {
-//    Event event = eventService.get(no);
-//    Ticket ticket = tecketService.get(no);
-//    Member member = memberService.get(no);
-//
-//    Map map = new HashMap();
-//    map.put("event", event);
-//    map.put("ticket", ticket);
-//    map.put("member", member);
-//    return map;
+// @RestController
+//  public Map<String,Object> list(map) throws Exception {
+//Map<String, Object> map = new HashMap<>(String, Object)(map);
 //
 //  }
 
