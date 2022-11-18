@@ -49,5 +49,9 @@ public interface PartyDao {
 
   int updateComment(Comment comment);
 
-  List<Party> findAllMain(String name);
+
+
+  List<Party> findAllMain();
+  //인덱스에 뽑는 파티리스트
+//  List<Party> findAllMain(String name);
 }

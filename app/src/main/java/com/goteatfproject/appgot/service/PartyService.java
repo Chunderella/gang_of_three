@@ -32,6 +32,10 @@ public interface PartyService {
   public List<Comment> getCommentList(Comment comment) throws Exception;
 
   boolean updateComment(Comment comment) throws Exception;
-
-  List<Party> mainList(String name) throws Exception;
+  List<Party> mainList() throws Exception;
+  
+  //인덱스에 뽑는 파티리스트
+//  List<Party> mainList(String name) throws Exception;
 }
+
+

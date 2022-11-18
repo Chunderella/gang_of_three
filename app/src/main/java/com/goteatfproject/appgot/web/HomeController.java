@@ -32,13 +32,16 @@ EventService eventService;
 
   @GetMapping("/")
   public String List(Model model, String name) throws Exception {
-    System.out.println("name = " + name);
-    model.addAttribute("parties",partyService.mainList(name));
+//    System.out.println("name = " + name);
     model.addAttribute("feeds",feedService.list());
     model.addAttribute("events",eventService.list());
-    System.out.println("partyService.mainList(name) = " + partyService.mainList(name));
+    model.addAttribute("parties",partyService.mainList());
+    //    model.addAttribute("names", name);
+    //    model.addAttribute("parties",partyService.mainList(name));
+
+//    System.out.println("partyService.mainList(name) = " + partyService.mainList());
     return "index";
   }
 
-
 }
+

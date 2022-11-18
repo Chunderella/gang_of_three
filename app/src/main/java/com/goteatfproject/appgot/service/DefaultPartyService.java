@@ -106,8 +106,15 @@ public class DefaultPartyService implements PartyService {
     return partyDao.updateComment(comment) != 0; // 넘어오는 값이 0이 아니면 true, 0이면 false
   }
 
+//
+//  //인덱스에 뽑는 파티리스트
+//  @Override
+//  public List<Party> mainList(String name) throws Exception {
+//    return partyDao.findAllMain(name);
+
+  //인덱스에 뽑는 파티리스트
   @Override
-  public List<Party> mainList(String name) throws Exception {
-    return partyDao.findAllMain(name);
+  public List<Party> mainList() throws Exception {
+    return partyDao.findAllMain();
   }
 }

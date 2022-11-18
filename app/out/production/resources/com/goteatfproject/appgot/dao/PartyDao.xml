@@ -29,6 +29,7 @@
     <result column="food" property="food"/>
     <result column="title" property="title"/>
     <result column="cont" property="content"/>
+    <result column="time" property="time"/>
     <result column="lit" property="limit"/>
     <result column="loc" property="location"/>
     <result column="addr" property="address"/>
@@ -317,7 +318,10 @@
     p.pno,
     p.title,
     p.meal,
+    p.food,
+    P.time,
     p.lit,
+    p.time,
     p.age,
     p.gender,
     p.max,
@@ -329,11 +333,12 @@
     from
     party p
     join member m on m.mno = p.mno
-    where p.meal = #{value}
     order by
     pno desc
     limit 8
   </select>
+
+
 
 </mapper>
 

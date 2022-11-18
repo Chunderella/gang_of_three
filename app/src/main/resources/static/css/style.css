@@ -101,3 +101,14 @@
     height: 17rem;
     background-color: white;
   }
+
+#card{
+  border: black solid;
+  background-color: white;
+  width: 250px;
+  height: 450px;
+}
+
+#thumbNail {
+  width: 200px;
+}

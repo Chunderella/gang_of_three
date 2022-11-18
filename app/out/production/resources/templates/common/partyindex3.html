@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div id="party-board" th:fragment="fragment-partyindex" >
+<div id="party-board" th:fragment="fragment-partyindex3" >
     <div class="container text-center">
         <div class="row">
             <div class="col-9 ">
-                <div class="row row-cols-4 ">
-                    <div class="col border rounded bg-white" th:each="party : ${parties}">
+                <div class="row row-cols-4">
+                    <div class="col border rounded" th:each="party : ${parties}">
                 <div id="card card-cover border p-3">
 
                     <div class="header p-1">
                         <div class="row">
                             <div class="col">
-                                <small class="card-haeder" th:text="'['+ ${party.meal} + '파티]'"></small>
+                                <small class="card-haeder">주작파티</small>
                             </div>
                             <div class="col">
                                 <small class="card-haeder" th:text="'['+ ${party.food} + ']'"></small>
