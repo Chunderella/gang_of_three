@@ -5,18 +5,50 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-9">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+                <p data-th-text="${parties}"></p>
+                <div class="row row-cols-4">
+                    <div class="col" th:each="party : ${parties}">
+                <div class="card">
 
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
-                    <div th:replace="/common/card.html :: fragment-card"></div>
+                    <div class="header p-1">
+                        <div class="row">
+                            <div class="col">
+                                <small class="card-haeder" th:text="'['+ ${party.meal} + '파티]'"></small>
+                            </div>
+                            <div class="col">
+                                <small class="card-haeder" th:text="'['+ ${party.food} + ']'"></small>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="tumbnail">
+                        <a th:href="@{/party/detail(no=${party.no})}"><img id="thumbNail"
+                                                                    th:src="@{/party/files/{path}(path=${party.thumbnail})}"
+                                                                    class="img-thumbnail" alt="이미지가 없습니다."></a>
+                    </div>
+
+                    <div class="card-body1 p-1 border-bottom">
+                        <p class="card-title" th:text=" ${party.title}"></p>
+                    </div>
+
+                    <div class="card-body2 border-bottom">
+                        <p class="card-text" th:text="'작성자 :' + ${party.writer.nick}"></p>
+                    </div>
+
+                    <div class="card-body3 border-bottom">
+                        <p class="card-text" th:values="${party.time}">날짜가안뽑혀</p>
+                    </div>
+
+                    <div class="card-body4 p-1">
+                        <a href="#" class="btn btn-primary">참여하기</a>
+                    </div>
+
 
                 </div>
+                    </div>
+                </div>
+
             </div>
             <!-------------------------------side--#center로 옮겨야함------------------------>
             <div class="col-3">

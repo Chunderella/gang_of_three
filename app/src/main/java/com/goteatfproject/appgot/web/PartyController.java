@@ -66,6 +66,9 @@ public class PartyController {
     return "party/partyList";
   }
 
+
+
+
   // 파티 리스트 게시물 등록
   @GetMapping("form")
   public String partyFrom() throws Exception {

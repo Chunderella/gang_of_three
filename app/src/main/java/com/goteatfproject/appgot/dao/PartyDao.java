@@ -49,5 +49,5 @@ public interface PartyDao {
 
   int updateComment(Comment comment);
 
-
+  List<Party> findAllMain(String name);
 }

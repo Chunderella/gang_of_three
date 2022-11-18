@@ -2,17 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div class="card" th:fragment="fragment-card" >
-        <div class="card-header bg-transparent border-secondary">[점심파티]
-            <span  class="badge bg-warning">New</span></h1> </div>
+
+
+        <span class="card-header bg-transparent border-secondary" th:each="party : ${parties}">
+            <span  class="badge bg-warning" th:text="'[' + ${party.no} + '파티]'"></span>
         <img src="/images/1.jpg" class="card-img-top" alt="...">
         <div class="card-body text-small">
-          <h5 class="card-title">제목:#</h5>
-          <p class="card-text">작성자:#</p>
+          <h5 class="card-title" th:text="'[' + ${party.title} + '파티]'"></h5>
+          <p class="card-text" th:text="'[' + ${party.content} + '파티]'"></p>
           <div class="card-footer bg-transparent border-secondary">#</div>
           <div class="btn-group">
             <button type="button" class="btn btn-sm btn-outline-secondary">20대</button>
             <button type="button" class="btn btn-sm btn-outline-secondary">남자만</button>
-       
+
             <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
                role="button">참여</a>
           </div>

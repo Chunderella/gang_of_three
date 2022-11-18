@@ -31,10 +31,12 @@ EventService eventService;
   }
 
   @GetMapping("/")
-  public String List(Model model) throws Exception {
-    model.addAttribute("parites",partyService.list());
+  public String List(Model model, String name) throws Exception {
+    System.out.println("name = " + name);
+    model.addAttribute("parties",partyService.mainList(name));
     model.addAttribute("feeds",feedService.list());
     model.addAttribute("events",eventService.list());
+    System.out.println("partyService.mainList(name) = " + partyService.mainList(name));
     return "index";
   }
 

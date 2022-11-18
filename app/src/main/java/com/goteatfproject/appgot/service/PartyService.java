@@ -32,4 +32,6 @@ public interface PartyService {
   public List<Comment> getCommentList(Comment comment) throws Exception;
 
   boolean updateComment(Comment comment) throws Exception;
+
+  List<Party> mainList(String name) throws Exception;
 }

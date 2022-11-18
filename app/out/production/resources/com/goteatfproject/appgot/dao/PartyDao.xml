@@ -312,6 +312,29 @@
     mno = #{writer.no}
   </update>
 
+  <select id="findAllMain" resultMap="partyMap">
+    select
+    p.pno,
+    p.title,
+    p.meal,
+    p.lit,
+    p.age,
+    p.gender,
+    p.max,
+    p.viewcnt,
+    p.thumbnail,
+    p.createdate,
+    m.mno,
+    m.nick
+    from
+    party p
+    join member m on m.mno = p.mno
+    where p.meal = #{value}
+    order by
+    pno desc
+    limit 8
+  </select>
+
 </mapper>
 
 

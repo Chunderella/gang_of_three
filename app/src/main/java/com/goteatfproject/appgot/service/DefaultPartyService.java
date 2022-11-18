@@ -105,4 +105,9 @@ public class DefaultPartyService implements PartyService {
 
     return partyDao.updateComment(comment) != 0; // 넘어오는 값이 0이 아니면 true, 0이면 false
   }
+
+  @Override
+  public List<Party> mainList(String name) throws Exception {
+    return partyDao.findAllMain(name);
+  }
 }

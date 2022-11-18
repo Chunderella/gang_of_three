@@ -219,22 +219,22 @@
             [<a href="fileDelete?no=1"
                 data-th-href="@{fileDelete(no=${file.no})}">파일삭제</a>]
           </li>
-        </ul>
-        파일 추가: <input name='files' type="file" multiple>
-      </td>
-    </tr>
-</table>
+          </ul>
+          파일 추가: <input name='files' type="file" multiple>
+        </td>
+      </tr>
+  </table>
 
 
 
 
-    <button type="submit" class="btn btn-outline-secondary">변경</button>
-      <button type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>
+      <button type="submit" class="btn btn-outline-secondary">변경</button>
+        <button type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>
 
-      <h5>Comment : </h5>
-      <div data-th-id="comment"></div>
+        <h5>Comment : </h5>
+        <div data-th-id="comment"></div>
 
-  </form>
+    </form>
 
   <!-- Comments Form TODO 댓글 1 -->
   <div class="card my-4">

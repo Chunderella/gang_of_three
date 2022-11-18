@@ -110,7 +110,8 @@
       <option value="아시안">아시안</option>
       <option value="동남아식">동남아식</option>
     </select>
-
+  </div>
+</div>
     <!------------------------------- 카테고리 스크립트 -------------------------->
     <script>
       function categoryChange() {
@@ -167,7 +168,7 @@
     <div id="partycontent">
       <div class="container">
         <div class="row row-cols-1 row-cols-md-4 g-4 text-small">
-          <th:block th:each="party : ${list}">
+          <th:block th:each="party : ${parties}">
             <div class="card" style="width: 20rem;" th:fragment="fragment-card">
               <div class="cd-header">
 

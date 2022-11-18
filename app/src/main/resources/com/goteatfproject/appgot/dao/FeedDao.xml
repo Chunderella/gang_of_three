@@ -50,7 +50,7 @@
     from
     feed f
     join member m on m.mno = f.mno
-
+  limit 8
   </select>
 
 <!--   페이징 리스트-->
