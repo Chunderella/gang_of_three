@@ -12,7 +12,7 @@ public interface MemberService {
   Member get(String id, String password) throws Exception;
 
   List<Member> list() throws Exception;
-
+  public int idCheck(String id);
 
   // 밑에는 피드의 사용 기능
 

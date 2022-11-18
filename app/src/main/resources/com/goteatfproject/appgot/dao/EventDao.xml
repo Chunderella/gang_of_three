@@ -89,6 +89,7 @@
   select
   e.eno,
   m.mno,
+      m.nick,
   e.title,
   e.cont,
   e.date,
@@ -113,8 +114,12 @@
     select
     e.eno,
     e.title,
+    e.cont,
     e.viewcnt,
     e.createdate,
+    e.loc,
+    e.date,
+    e.addr,
     m.nick,
     m.mno,
     ef.efileno,

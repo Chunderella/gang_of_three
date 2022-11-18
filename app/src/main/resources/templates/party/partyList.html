@@ -151,16 +151,6 @@
     <!------------------------------- 카테고리 end -------------------------->
 
     <!-------------------------------브래드-------------------------->
-    <div id="breadcrumb">
-      <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">#</a></li>
-          <li class="breadcrumb-item active" aria-current="page">#</li>
-          <li class="breadcrumb-item active" aria-current="page">#</li>
-        </ol>
-      </nav>
-    </div>
-    <!-------------------------------브래드 end-------------------------->
 
     <!---------------- 버튼 ---------------->
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -177,7 +167,7 @@
     <div id="partycontent">
       <div class="container">
         <div class="row row-cols-1 row-cols-md-4 g-4 text-small">
-          <th:block th:each="party : ${parties}">
+          <th:block th:each="party : ${list}">
             <div class="card" style="width: 20rem;" th:fragment="fragment-card">
               <div class="cd-header">
 

@@ -1,46 +1,60 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>-->
-<!--<!DOCTYPE mapper-->
-<!--  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
-<!--  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
-<!--<mapper namespace="com.goteatfproject.appgot.dao.BoardDao">-->
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goteatfproject.appgot.dao.BoardDao">
 
-<!--&lt;!&ndash;  &lt;!&ndash; 자바 객체의 프로퍼티와 컬럼 이름을 연결한다. &ndash;&gt;&ndash;&gt;-->
-<!--  <resultMap type="ticket" id="ticketMap">-->
-<!--    <id column="tno" property="ticketNo"/>-->
-<!--    <result column="pay" property="pay"/>-->
-<!--    <result column="paydate" property="paydate"/>-->
-<!--    <result column="paycnt" property="paycount"/>-->
-<!--    <result column="cancel" property="cancel"/>-->
-<!--    <result column="price" property="price"/>-->
+<!--  &lt;!&ndash; 자바 객체의 프로퍼티와 컬럼 이름을 연결한다. &ndash;&gt;-->
+  <resultMap type="ticket" id="ticketMap">
+    <id column="tno" property="ticketNo"/>
+    <result column="pay" property="pay"/>
+    <result column="paydate" property="paydate"/>
+    <result column="paycnt" property="paycount"/>
+    <result column="cancel" property="cancel"/>
+    <result column="price" property="price"/>
 
-<!--    <association property="writer" javaType="member">-->
-<!--      <id column="mno" property="memberNo"/>-->
-<!--    </association>-->
+    <association property="writer" javaType="member">
+      <id column="mno" property="memberNo"/>
+    </association>
 
-<!--    <association property="eventNo" javaType="event">-->
-<!--      <id column="eno" property="EventNo"/>-->
-<!--    </association>-->
+    <association property="eventNo" javaType="event">
+      <id column="eno" property="EventNo"/>
+    </association>
 
-<!--  </resultMap>-->
+  </resultMap>
 
 
-<!--  &lt;!&ndash; 관리자페이지 파티, 피드, 이벤트 게시글의 신규 게시글 조회&ndash;&gt;-->
-<!--  <select id="findAll" resultMap="boardMap">-->
-<!--    select-->
-<!--      tname,-->
-<!--      title,-->
-<!--      cont,-->
-<!--      date-->
-<!--    from party-->
-<!--      union select tname, title, cont, date from feed-->
-<!--      union select tname, title, cont, date from event-->
-<!--    order by-->
-<!--      date desc-->
-<!--    limit 15;-->
-<!--  </select>-->
+  <!-- 관리자페이지 파티, 피드, 이벤트 게시글의 신규 게시글 조회-->
+  <select id="findAll" resultMap="ticketMap">
+      select
+      t.tno,
+      m.mno,
+      e.eno,
+      t.pay,
+      t.paydate,
+      t.paycnt,
+      t.cancel,
+      t.price
 
+<<<<<<< HEAD
 
 <!--        insert into ticket(tno, mno, eno,pay,paycnt,cancel,price,paydate)-->
 <!--        values (55, 44, 5, "kakao" , 10, 0, 100000, now())-->
 
 <!--</mapper>-->
+=======
+      from ticket t
+      left outer join member m on t.mno = m.mno
+      join event e on t.eno = e.eno;
+  </select>
+
+
+    <insert id="insert" parameterType="ticket"
+            useGeneratedKeys="true" keyColumn="tno" keyProperty="no">
+
+    insert into ticket (mno, eno, pay, paydate, paycnt, cancel, price)
+    values (#{mno}, #{eno}, #{pay}, now(), #{paycnt}, '', #{price} );
+    </insert>
+
+</mapper>
+>>>>>>> 991105ac477e3f66eb5c433e6689a45c5b2569c2

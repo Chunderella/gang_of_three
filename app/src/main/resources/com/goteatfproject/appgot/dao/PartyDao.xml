@@ -190,9 +190,23 @@
       p.pno,
       p.title,
       p.viewcnt,
+
+      p.time,
+      p.meal,
+      p.food,
+
+      p.cont,
+
+
       p.createdate,
       m.nick,
       m.mno,
+
+      p.age,
+      p.gender,
+      p.addr,
+      p.loc,
+
       pf.pfileno,
       pf.path
       from

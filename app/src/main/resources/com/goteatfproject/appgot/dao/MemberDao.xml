@@ -19,6 +19,10 @@
   </resultMap>
 
 
+  <select id="idCheck" parameterType="String" resultType="int">
+    SELECT COUNT(id) FROM MEMBER WHERE id= #{id}
+  </select>
+
   <insert id="insert" useGeneratedKeys="true" parameterType="member">
     insert into member (id, pwd, name, nick, birth, tel, gender, createddate, post,
     addr, subaddr, interest, intro, thumbnail)

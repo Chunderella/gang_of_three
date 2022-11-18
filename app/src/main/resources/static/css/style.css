@@ -84,16 +84,20 @@
 
 .line-1 {
     height: 0.1rem;
+  background-color: white;
   }
 
   .line-2 {
     height: 0.5rem;
+    background-color: white;
   }
 
   .line-3 {
     height: 2.5rem;
+    background-color: white;
   }
 
   .line-4 {
     height: 17rem;
+    background-color: white;
   }
