@@ -31,10 +31,12 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public String List(Model model) throws Exception {
+  public String List(Model model,String meal, String food) throws Exception {
     model.addAttribute("feeds",feedService.mainList());
     model.addAttribute("events",eventService.mainList());
-    model.addAttribute("parties",partyService.mainList());
+    model.addAttribute("parties",partyService.mainList(meal, food));
+    model.addAttribute("meal", meal);
+    model.addAttribute("food", food);
 
     return "index";
   }

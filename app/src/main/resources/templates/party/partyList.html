@@ -48,6 +48,7 @@
       <option value="술">술파티</option>
       <option value="디저트">디저트파티</option>
 
+
     </select>
 
     <select id="foodSelect" onchange="categoryChange2()">
@@ -88,8 +89,8 @@
         if (url.includes("food")) { // food 값이 들어있으면
 
           // 예: url.substring(url.lastIndexOf("&"), length) => 중식 값을 날린 url + 새로 선택한 food 값을 연결
-          // lastIndexOf("&"), length) : &부터 url length끝까지
-          window.location.href = url.substring(url.lastIndexOf("&"), length) + "&food=" + foodValue;
+          // lastaIndexOf("&"), length) : &부터 url length끝까지
+          window.location.href = url.substring(url.lstIndexOf("&"), length) + "&food=" + foodValue;
         } else if (url.includes("meal")) { // food가 선택이 안되어있는 상태 일 때 1차 카테고리 선택 후
 
           // "/party/list" =>  1차 카테고리 선택 된 상태인  현재의 url 값을 가져온다 + 새로 선택한 food 값을 연결 => 다시 2차 카테고리를 선택하게 되면 if문 2차 분류 검사로 다시 돌아간다
@@ -99,6 +100,7 @@
         }
       }
     </script>
+
     <!------------------------------- 카테고리 스크립트 end -------------------------->
 
     <!------------------------------- 카테고리 end -------------------------->

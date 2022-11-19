@@ -143,7 +143,7 @@ public class DefaultPartyService implements PartyService {
 
   //메인페이지에서 뽑는 파티리스트
   @Override
-  public List<Party> mainList() throws Exception {
-    return partyDao.findAllMain();
+  public List<Party> mainList(String meal, String food) throws Exception {
+    return partyDao.findAllMain(meal, food);
   }
 }

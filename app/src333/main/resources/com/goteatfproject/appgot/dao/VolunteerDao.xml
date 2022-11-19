@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goteatfproject.appgot.dao.VolunteerDao">
+  <resultMap type="volunteer" id="volunteerMap">
+    <id column="vno" property="partyNo"/>
+    <id column="mno" property="memberNo"/>
+    <result column="date" property="date"/>
+    <result column="state" property="state"/>
+    <result column="etc" property="etc"/>
+
+    <association property="writer" javaType="member">
+      <id column="mno" property="no"/>
+      <result column="nick" property="nick"/>
+    </association>
+
+<!--    <collection property="writer" ofType="member">-->
+<!--      <id column="no" property="mno"/>-->
+<!--      <result column="nick" property="nick"/>-->
+<!--    </collection>-->
+  </resultMap>
+
+<!-- 파티 참여 -->
+  <insert id="partyJoin" parameterType="volunteer">
+    insert into volunteer (vno, mno, date)
+    values (#{urlNo}, #{writer.no}, now())
+  </insert>
+
+<!-- 파티 참여자 카운트  -->
+  <update id="partyJoinCount" parameterType="volunteer">
+    <![CDATA[
+    update
+    party
+    set max = max + 1
+    where (lit, pno) in
+    (select
+    p.lit, v.vno
+    from party p
+    join volunteer v on p.pno = v.vno
+    where
+    vno = #{urlNo})
+    and max < `lit`
+    ]]>
+  </update>
+
+<!-- 모든 게시물 파티참여자 조회 -->
+  <select id="findAll" resultMap="volunteerMap">
+    select
+    v.date,
+    v.vno,
+    v.mno,
+    m.nick
+    from member m
+    join volunteer v on m.mno = v.mno
+    order by vno, date desc;
+  </select>
+
+<!-- 특정 게시물 파티참여자 조회 -->
+  <select id="findByNo" resultMap="volunteerMap">
+    select
+    v.date,
+    v.vno,
+    v.mno,
+    m.nick
+    from member m
+    join volunteer v on m.mno = v.mno
+    where vno = #{value}
+    order by vno, date asc
+  </select>
+
+<!-- 테스트 -->
+  <select id="findByNo2" resultMap="volunteerMap">
+    select
+    *
+    from party p
+    join volunteer v on p.pno = v.vno
+    where vno = #{urlNo}
+  </select>
+
+</mapper>

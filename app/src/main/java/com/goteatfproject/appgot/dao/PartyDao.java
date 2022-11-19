@@ -65,6 +65,6 @@ public interface PartyDao {
   int deleteComment(int no);
 
 //메인페이지 파티게시물 조회
-  List<Party> findAllMain();
+  List<Party> findAllMain(@Param("meal") String meal, @Param("food") String food);
 
 }

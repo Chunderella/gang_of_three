@@ -53,5 +53,5 @@ public interface PartyService {
   boolean deleteComment(int no) throws Exception;
 
 //메인페이지 게시글 노출
-List<Party> mainList() throws Exception;
+List<Party> mainList(String meal, String food) throws Exception;
 }
