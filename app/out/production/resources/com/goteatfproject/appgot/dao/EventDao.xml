@@ -77,7 +77,7 @@
   join member m on e.mno = m.mno
    order by
       eno desc
-limit 6
+limit 8
   </select>
 
 

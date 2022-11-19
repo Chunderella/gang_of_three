@@ -2,10 +2,8 @@ package com.goteatfproject.appgot.service;
 
 import com.goteatfproject.appgot.dao.FeedDao;
 import com.goteatfproject.appgot.dao.PartyDao;
-import com.goteatfproject.appgot.vo.Criteria;
-import com.goteatfproject.appgot.vo.Feed;
-import com.goteatfproject.appgot.vo.FeedAttachedFile;
-import com.goteatfproject.appgot.vo.Party;
+import com.goteatfproject.appgot.vo.*;
+
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +48,6 @@ public class DefaultFeedService implements FeedService {
     return feedDao.simpleProfile(no);
   }
 
-
   @Override
   public List<Feed> randomlist() throws Exception {
     return feedDao.randomfindAll();
@@ -94,4 +91,28 @@ public class DefaultFeedService implements FeedService {
   public boolean deleteFeedAttachedFile(int fileNo) throws Exception {
     return feedDao.deleteFile(fileNo) > 0;
   }
+
+  // 마이페이지 피드게시글 본인 작성 글 리스트
+  @Override
+  public List<Map<String, Object>> selectFeedListByNo(Map<String, Object> map) {
+    return feedDao.selectFeedListByNo(map);
+  }
+
+  // 마이페이지 피드게시글 본인 작성 글 상세보기
+  // 관리자페이지 피드게시글 회원 작성 글 상세보기
+  @Override
+  public Feed getMyFeedListDetail(int no) throws Exception {
+    return feedDao.findByMyFeedListDetail(no);
+  }
+
+  // 관리자페이지 피드게시글 비활성화
+  @Override
+  public boolean feedBlock(int no) {
+    return feedDao.feedBlock(no) > 0;
+  }
+  @Override
+  public List<Feed> mainList() throws Exception {
+    return feedDao.findAllMain();
+  }
 }
+

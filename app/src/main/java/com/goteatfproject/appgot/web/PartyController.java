@@ -1,8 +1,11 @@
 package com.goteatfproject.appgot.web;
 
 import com.goteatfproject.appgot.service.VolunteerService;
-import com.goteatfproject.appgot.vo.*;
-
+import com.goteatfproject.appgot.vo.AttachedFile;
+import com.goteatfproject.appgot.vo.Comment;
+import com.goteatfproject.appgot.vo.Party;
+import com.goteatfproject.appgot.vo.Member;
+import com.goteatfproject.appgot.vo.Volunteer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,10 +20,14 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.goteatfproject.appgot.service.PartyService;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/party/")
@@ -29,11 +36,15 @@ public class PartyController {
   PartyService partyService;
   ServletContext sc;
 
-  public PartyController(PartyService partyService, ServletContext sc) {
-    System.out.println("BoardController() 호출됨!!");
+  VolunteerService volunteerService;
+
+  public PartyController(PartyService partyService, ServletContext sc, VolunteerService volunteerService) {
+    System.out.println("PartyController() 호출됨!!");
     System.out.println("ServletContext() 호출됨!!");
+    System.out.println("VolunteerContext() 호출됨!!");
     this.partyService = partyService;
     this.sc = sc;
+    this.volunteerService = volunteerService;
   }
 
 //  // 파티 게시판 페이징 적용
@@ -58,16 +69,29 @@ public class PartyController {
 
   // 파티게시판 : 페이징 보류, 카테고리 분류 추가
   @GetMapping("list")
-  public String partyList(Model model, String meal, String food) throws Exception {
+  public String partyList(Model model, String meal, String food, HttpSession session) throws Exception {
     model.addAttribute("parties", partyService.list2(meal, food));
     model.addAttribute("meal", meal);
     model.addAttribute("food", food);
     System.out.println("model.getAttribute(\"parties\") = " + model.getAttribute("parties"));
+
+// 참여하기 버튼 ->
+      // 파티 참여신청 버튼 추가 진행중
+//    model.addAttribute("volTest", volunteerService.list());
+
+//    Member loginMember = (Member) session.getAttribute("loginMember");
+//    model.addAttribute("loginMember", loginMember);
+//
+//    int no = loginMember.getNo();
+//
+//    Map<String, Object> volunteerMap = new HashMap<>();
+//    Volunteer volunteer = volunteerService.get2(no); // 멤버 번호를 저장해서 참여멤버인지 조회
+//    System.out.println("volunteer ======> " + volunteer.getMemberNo());
+//    volunteerMap.put("volTest", volunteer);
+//    System.out.println("loginMember =====> " + model.getAttribute("loginMember"));
+//    System.out.println("volunteerMap ====> " + volunteerMap.get("volTest"));
     return "party/partyList";
   }
-
-
-
 
   // 파티 리스트 게시물 등록
   @GetMapping("form")
@@ -86,7 +110,7 @@ public class PartyController {
     party.setAttachedFiles(saveAttachedFiles(files));
     party.setWriter((Member) session.getAttribute("loginMember"));
 
-    // 첨부파일 사이즈가 0 보다 크면 첨부파일 첫번째의 Filepath값 가져와서 thumbnail로 설정 TODO 추가2
+    // 첨부파일 사이즈가 0 보다 크면 첨부파일 첫번째의 Filepath값 가져와서 thumbnail로 설정
     if (party.getAttachedFiles().size() > 0) {
       List<AttachedFile> attachedFiles = new ArrayList<>();
       attachedFiles = party.getAttachedFiles();
@@ -157,14 +181,13 @@ public class PartyController {
     List<AttachedFile> attachedFiles = new ArrayList<>();
     String dirPath = sc.getRealPath("/party/files");
 
-
     for (MultipartFile part : files) {
       if (part.isEmpty()) {
         continue;
       }
 
-    System.out.println("filename3 = " + Arrays.toString(files));
-    System.out.println("filename4 = " + files);
+      System.out.println("filename3 = " + Arrays.toString(files));
+      System.out.println("filename4 = " + files);
       System.out.println("dirPath = " + dirPath);
 
       String filename = UUID.randomUUID().toString();
@@ -177,20 +200,21 @@ public class PartyController {
   // 파티 게시물 상세보기
   @GetMapping("detail")
   public Map detail(int no) throws Exception {
+
     Party party = partyService.get(no);
 
     if (party == null) {
       throw new Exception("해당 번호의 게시글이 없습니다!");
     }
-      Map map = new HashMap();
-      map.put("party", party);
-      return map;
-    }
+    Map map = new HashMap();
+    map.put("party", party);
+    return map;
+  }
 
-    // 파티 게시물 수정
-    @PostMapping("update")
+  // 파티 게시물 수정
+  @PostMapping("update")
   public String update(Party party, HttpSession session,
-        Part[] files) throws Exception {
+      Part[] files) throws Exception {
 
     party.setAttachedFiles(saveAttachedFiles(files));
 
@@ -201,9 +225,8 @@ public class PartyController {
     if (!partyService.update(party)) {
       throw new Exception("게시글을 변경할 수 없습니다.");
     }
-//      return "redirect:list";
-      return "redirect:list?meal=all";
-   }
+    return "redirect:list?meal=all";
+  }
 
   private void checkOwner(int partyNo, HttpSession session) throws Exception {
     Member loginMember = (Member) session.getAttribute("loginMember");
@@ -234,7 +257,6 @@ public class PartyController {
     System.out.println("attachedFile.getNo() = " + attachedFile.getFilepath());
     System.out.println("attachedFile.getNo() = " + attachedFile.getPartyNo());
 
-
     // 게시글 작성자 일치여부
     Member loginMember = (Member) session.getAttribute("loginMember");
     Party party = partyService.get(attachedFile.getPartyNo());
@@ -251,36 +273,47 @@ public class PartyController {
     return "redirect:detail?no=" + party.getNo();
   }
 
-  // 테스트
-// 댓글 작성 테스트
+  // 댓글 작성
   // cont 컬럼 null 허용이라 ""도 들어감, not null로 변경예정
   @PostMapping("comment")
   public String insertComment(@RequestParam("no") int no,
       @RequestParam("commentCont") String commentCont, HttpSession session) throws Exception {
+    // 게시물 번호를 받음
+    // @RequestParam("no") int no
+   // <input type="hidden" name="noo" data-th-value="${party.no}"/>
 
+    // 댓글 내용을 받음
+    // @RequestParam("commentCont") String commentCont
+
+    // comment객체를 생성
     Comment comment = new Comment();
     comment.setWriter((Member) session.getAttribute("loginMember"));
+    // 받은 댓글 내용을 저장
     comment.setCommentCont(commentCont);
+    // 받은 게시물 번호를 저장
     comment.setPartyNo(no);
     partyService.insertComment(comment);
     return "redirect:detail?no=" + no;
   }
 
-  // 댓글 출력 테스트
+  // 댓글 출력
   @GetMapping("getCommentList")
   @ResponseBody
   private List<Comment> getCommentList(@RequestParam("pno") int pno, Model model, HttpSession session) throws Exception {
 
+    // @RequestParam("pno") int pno
+    // ajax에서 pno로 게시물 번호를 전달해서 pno로 게시물 번호를 받음
     System.out.println("pno = " + pno);
-    Object loginMember = session.getAttribute("loginMember");
-//    System.out.println("loginMember = " + loginMember.getNo());
-
+    Member loginMember = (Member) session.getAttribute("loginMember");
+    //    System.out.println("loginMember = " + loginMember.getNo());
     model.addAttribute("loginMember", loginMember);
     System.out.println("modelLoginMember = " + model.getAttribute("loginMember"));
+
+    // comment객체를 생성
     Comment comment = new Comment();
-
+    // 파티 게시물 번호를 저장
     comment.setPartyNo(pno);
-
+    // 파티 게시물 번호를 이용해서 댓글 리스트 조회
     model.addAttribute("comment", partyService.getCommentList(comment));
     System.out.println("model2 = " + model.getAttribute("comment"));
     return partyService.getCommentList(comment);
@@ -291,10 +324,11 @@ public class PartyController {
   public String updateComment(@RequestBody Comment comment, HttpSession session) throws  Exception {
     System.out.println("comment1 = " + comment.getPartyReplyNo());
     System.out.println("comment2 = " + comment.getMemberNo());
+    // 댓글 고유 번호와 멤버 번호를 가져온다
 
     comment.setWriter((Member) session.getAttribute("loginMember"));
 
-    // prno, mno로 수정 체크
+    // 댓글 멤버번호, 회원 멤버번호로 수정 체크
     checkOwner2(session, comment);
 
     if (!partyService.updateComment(comment)) {
@@ -302,7 +336,6 @@ public class PartyController {
     }
     return "1";
   }
-
   private void checkOwner2(HttpSession session, Comment comment) throws Exception {
     Member loginMember = (Member) session.getAttribute("loginMember");
     // 개인이해메모
@@ -314,4 +347,12 @@ public class PartyController {
     }
   }
 
+  @GetMapping("deleteComment")
+  @ResponseBody
+  public String deleteComment(@RequestParam("deletePartyReplyNo") int deletePartyReplyNo, HttpSession session) throws Exception {
+    if (!partyService.deleteComment(deletePartyReplyNo)) {
+      throw new Exception("댓글을 삭제할 수 없습니다.");
+    }
+    return "1";
+  }
 }

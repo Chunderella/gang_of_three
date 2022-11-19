@@ -1,6 +1,5 @@
 package com.goteatfproject.appgot.vo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -12,22 +11,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter @Setter @ToString
 public class Party {
 
-  private int no;
+  private int no; 
   private String meal;
   private String food;
   private String title;
   private String content;
-  //  private String nick;
+//  private String nick;
   private String gender;
   private int max;
 
-  //  @DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-//  @JsonProperty("time")
-//  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 //  @JsonProperty("time")
 //  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
- private LocalDateTime time;
+  //date에서 수정 l.d.t
+  private LocalDateTime time;
+
   private int age;
   private int limit;
   private String location;
@@ -43,6 +41,5 @@ public class Party {
   private List<AttachedFile> attachedFiles;
 
   private Comment commentList;
-
 
 }

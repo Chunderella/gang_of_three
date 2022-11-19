@@ -84,31 +84,26 @@
 
 .line-1 {
     height: 0.1rem;
-  background-color: white;
   }
 
   .line-2 {
     height: 0.5rem;
-    background-color: white;
   }
 
   .line-3 {
     height: 2.5rem;
-    background-color: white;
   }
 
   .line-4 {
     height: 17rem;
-    background-color: white;
   }
 
-#card{
-  border: black solid;
-  background-color: white;
-  width: 250px;
-  height: 450px;
-}
 
-#thumbNail {
-  width: 200px;
-}
+  #thumbNail {
+    width: 220px;
+    height: 220px;
+  }
+  /*#card\ card-cover\ border\ p-3 {*/
+  /*  width: 500px;*/
+  /*  height: 800px;*/
+  /*}*/

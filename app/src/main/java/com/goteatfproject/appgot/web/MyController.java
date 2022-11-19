@@ -1,23 +1,22 @@
 package com.goteatfproject.appgot.web;
 
+import com.goteatfproject.appgot.service.EventService;
 import com.goteatfproject.appgot.service.FeedService;
 import com.goteatfproject.appgot.service.MemberService;
 import com.goteatfproject.appgot.service.PartyService;
 import com.goteatfproject.appgot.vo.Criteria;
 import com.goteatfproject.appgot.vo.Member;
 import com.goteatfproject.appgot.vo.PageMaker;
-import com.goteatfproject.appgot.vo.Party;
-
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import org.springframework.boot.Banner.Mode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,21 +28,26 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/my")
 public class MyController {
-  
-  PartyService partyService;
-  FeedService feedService;
-  MemberService memberService;
-  ServletContext sc;
-  
-  public MyController(PartyService partyService, FeedService feedService,
-      MemberService memberService, ServletContext sc) {
-    this.partyService = partyService;
-    this.feedService = feedService;
-    this.memberService = memberService;
-    this.sc = sc;
-  }
 
-  
+  @Autowired
+  PartyService partyService;
+  @Autowired
+  FeedService feedService;
+  @Autowired
+  MemberService memberService;
+
+  @Autowired
+  EventService eventService;
+
+  @Autowired
+  ServletContext sc;
+
+//  public MyController(PartyService partyService,FeedService feedService, MemberService memberService) {
+//    this.partyService = partyService;
+//    this.feedService = feedService;
+//    this.memberService = memberService;
+//  }
+
   // 마이페이지
   @GetMapping("/main")
   public String myPage(HttpSession session, Model model) throws Exception {
@@ -52,59 +56,16 @@ public class MyController {
       model.addAttribute("member", memberService.get(loginMember.getNo()));
       return "mypage/myMain";
     }
-    
     return "/auth/login";
   }
-  
-  
-  // 마이페이지-파티게시글 관리
-  @GetMapping("/myPartyList")
-  public ModelAndView myPartyList(Criteria cri) throws Exception {
-    
-    // 기존에는 return에서 보냈으면 mv에서는 여기서 보냄
-//    ModelAndView mv = new ModelAndView("party/partyList");
-    ModelAndView mv = new ModelAndView();
-    
-    PageMaker pageMaker = new PageMaker();
-    pageMaker.setCri(cri);
-    pageMaker.setTotalCount(50);
-    
-    List<Map<String, Object>> myPartyList = partyService.selectPartyList(cri);
-    mv.addObject("myPartyList", myPartyList);
-    mv.addObject("pageMaker", pageMaker);
-    
-    mv.setViewName("mypage/myPartyList");
-//    model.addAttribute("parties", partyService.list());
-//    return "party/partyList";
-    return mv;
-  }
-  
-  // 마이페이지-피드게시글 관리
-  @GetMapping("/myFeedList")
-  public ModelAndView myFeedList(Criteria cri) throws Exception {
-    
-    ModelAndView mv = new ModelAndView();
-    
-    PageMaker pageMaker = new PageMaker();
-    pageMaker.setCri(cri);
-    pageMaker.setTotalCount(50);
-    
-    List<Map<String, Object>> myFeedList = feedService.selectFeedList(cri);
-    mv.addObject("myFeedList", myFeedList);
-    mv.addObject("pageMaker", pageMaker);
-    
-    mv.setViewName("mypage/myFeedList");
-    
-    return mv;
-  }
-  
+
   // 마이페이지- 개인 정보 수정 페이지
   @GetMapping("/myProfile")
   public String myProfile(Model model, HttpSession session) throws Exception {
-    
+
     // 로그인 한 회원의 정보 출력
     // System.out.println("session.getAttribute(\"Loginmember\") = " + session.getAttribute("loginMember"));
-    
+
     // 로그인 한 회원의 정보를 loginMember 변수에 담는다
     Member loginMember = (Member) session.getAttribute("loginMember");
     if (loginMember != null) {
@@ -113,7 +74,7 @@ public class MyController {
     }
     return "redirect:/auth/login";
   }
-  
+
   // 마이페이지 개인 정보 수정 현재 패스워드 체크
   @PostMapping("/currentPassword")
   @ResponseBody
@@ -122,7 +83,7 @@ public class MyController {
     int result = memberService.getCurrentPasswordCheck(loginMember.getNo(), password);
     return result;
   }
-  
+
   // 마이페이지 개인 정보 수정
   @PostMapping("/update")
   public String updateMember(Member member) throws Exception {
@@ -145,7 +106,7 @@ public class MyController {
       memberService.updateProfile(member);
       return "redirect:/my/main";
     } else {
-      return "redirect:/my/myProfile";
+      return "redirect:/my/main";
     }
   }
 
@@ -162,15 +123,119 @@ public class MyController {
     return "redirect:/my/main";
   }
 
-    // 마이페이지 회원 삭제
-    @PostMapping("/delete")
-    @ResponseBody
-    public String delete(HttpSession session, int no) throws Exception {
-      Member member = (Member) session.getAttribute("loginMember");
-      if (member.getNo() == no) {
-        memberService.delete(no);
-        return "회원 탈퇴 완료";
-      }
-      return "회원 탈퇴 실패";
+  // 마이페이지 회원 비활성화
+  @PostMapping("/delete")
+  @ResponseBody
+  public String delete(HttpSession session, int no) throws Exception {
+    Member member = (Member) session.getAttribute("loginMember");
+    if (member.getNo() == no) {
+      memberService.delete(no);
+      return "회원 탈퇴 완료";
     }
+    return "회원 탈퇴 실패";
+  }
+
+  // 마이페이지-파티게시글 관리
+  @GetMapping("/myPartyList")
+  public ModelAndView myPartyList(Criteria cri, HttpSession session) throws Exception {
+
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    ModelAndView mv = new ModelAndView();
+
+    PageMaker pageMaker = new PageMaker();
+    pageMaker.setCri(cri);
+    pageMaker.setTotalCount(10);
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("cri", cri);
+    map.put("memberNo", loginMember.getNo());
+
+    List<Map<String, Object>> myPartyList = partyService.selectPartyListByNo(map);
+    mv.addObject("myPartyList", myPartyList);
+    mv.addObject("pageMaker", pageMaker);
+
+    mv.setViewName("mypage/myPartyList");
+    //    model.addAttribute("parties", partyService.list());
+    //    return "party/partyList";
+    return mv;
+  }
+
+
+  // 마이페이지-피드게시글 관리
+  @GetMapping("/myFeedList")
+  public ModelAndView myFeedList(Criteria cri, HttpSession session) throws Exception {
+
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    ModelAndView mv = new ModelAndView();
+
+    PageMaker pageMaker = new PageMaker();
+    pageMaker.setCri(cri);
+    pageMaker.setTotalCount(10);
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("cri", cri);
+    map.put("memberNo", loginMember.getNo());
+
+    List<Map<String, Object>> myFeedList = feedService.selectFeedListByNo(map);
+    mv.addObject("myFeedList", myFeedList);
+    mv.addObject("pageMaker", pageMaker);
+
+    mv.setViewName("mypage/myFeedList");
+
+    return mv;
+  }
+
+  // 마이페이지- 이벤트게시글 관리
+  @GetMapping("/myEventList")
+  public ModelAndView myEventList(Criteria cri, HttpSession session) throws Exception {
+
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    ModelAndView mv = new ModelAndView();
+
+    PageMaker pageMaker = new PageMaker();
+    pageMaker.setCri(cri);
+    pageMaker.setTotalCount(10);
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("cri", cri);
+    map.put("memberNo", loginMember.getNo());
+
+    List<Map<String, Object>> myEventList = eventService.selectEventList2(map);
+    mv.addObject("myEventList", myEventList);
+    mv.addObject("pageMaker", pageMaker);
+
+    mv.setViewName("mypage/myEventList");
+
+    return mv;
+  }
+
+  // 마이페이지 파티게시글 본인 작성 글 상세보기
+  @GetMapping("/myPartyListDetail")
+  public String myPartyListDetail(Model model, HttpSession session, int no) throws Exception {
+
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    if (loginMember != null) {
+      model.addAttribute("party", partyService.getMyPartyListDetail(no));
+      System.out.println("model.getAttribute(\"party\") = " + model.getAttribute("party"));
+    }
+    return "mypage/myPartyListDetail";
+  }
+
+  //마이페이지 피드게시글 본인 작성 글 상세보기
+  @GetMapping("/myFeedListDetail")
+  public String mFeedListDetail(Model model, HttpSession session, int no) throws Exception {
+
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    if (loginMember != null) {
+      model.addAttribute("feed", feedService.getMyFeedListDetail(no));
+      System.out.println("model.getAttribute(\"feed\") = " + model.getAttribute("feed"));
+    }
+    return "mypage/myFeedListDetail";
+  }
+
 }

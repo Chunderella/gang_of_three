@@ -23,14 +23,7 @@ public class DefaultMemberService implements MemberService {
     return memberDao.findByNo(no);
   }
 
-    @Override
-    public int idCheck(String id) {
-        int cnt = memberDao.idCheck(id);
-        System.out.println("cnt: " + cnt);
-        return cnt;
-    }
-
-    @Override
+  @Override
   public Member get(String id, String password) throws Exception {
     return memberDao.findByEmailPassword(id, password);
   }
@@ -52,9 +45,10 @@ public class DefaultMemberService implements MemberService {
   public Member profileByNick(String nick) throws Exception {
     return memberDao.profileByNick(nick);
   }
+  // 밑에는 피드의 사용 기능 마지막
 
   // 마이페이지 현재 패스워드 확인
- @Override
+  @Override
   public int getCurrentPasswordCheck(int no, String password) {
     return memberDao.currentPasswordCheck(no, password);
   }
@@ -69,41 +63,53 @@ public class DefaultMemberService implements MemberService {
   @Transactional
   @Override
   public boolean delete(int no) throws Exception {
-    return memberDao.delete(no) > 0; 
+    return memberDao.delete(no) > 0;
   }
 
   // 마이페이지 회원 정보 프로필 사진 수정
+  @Override
   public boolean updateProfile(Member member) throws Exception {
     return memberDao.updateProfile(member) > 0;
   }
 
   // 마이페이지 회원 정보 자기소개 수정
+  @Override
   public boolean updateIntro(Member member) throws Exception {
     return memberDao.updateIntro(member) > 0;
   }
-  
+
   // 관리자페이지 전체회원 limit 10;
   @Override
   public List<Member> MemberList() throws Exception {
     return memberDao.findByMember();
   }
-  
+
   // 관리자페이지 신규회원 limit 10;
   @Override
   public List<Member> NewMemberList() throws Exception {
     return memberDao.findByNewMember();
   }
-  
+
   // 관리자페이지 회원 상세정보
   @Override
   public Member getMemberDetail(int no) throws Exception {
     return memberDao.findByMemberDetail(no);
   }
-  
+
   // 관리자페이지 회원정보 검색
   @Override
   public List<Member> getSearchMember(String keyword) {
     return memberDao.searchMember(keyword);
+  }
+
+  @Override
+  public boolean memberBlock(int no) {
+    return memberDao.memberBlock(no) > 0;
+  }
+
+  @Override
+  public boolean memberActive(int no) {
+    return memberDao.memberActive(no) > 0;
   }
 
 }

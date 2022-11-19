@@ -19,7 +19,7 @@ public class HomeController {
 
   PartyService partyService;
   FeedService feedService;
-EventService eventService;
+  EventService eventService;
   ServletContext sc;
 
   public HomeController(PartyService partyService, FeedService feedService,
@@ -31,15 +31,11 @@ EventService eventService;
   }
 
   @GetMapping("/")
-  public String List(Model model, String name) throws Exception {
-//    System.out.println("name = " + name);
-    model.addAttribute("feeds",feedService.list());
-    model.addAttribute("events",eventService.list());
+  public String List(Model model) throws Exception {
+    model.addAttribute("feeds",feedService.mainList());
+    model.addAttribute("events",eventService.mainList());
     model.addAttribute("parties",partyService.mainList());
-    //    model.addAttribute("names", name);
-    //    model.addAttribute("parties",partyService.mainList(name));
 
-//    System.out.println("partyService.mainList(name) = " + partyService.mainList());
     return "index";
   }
 

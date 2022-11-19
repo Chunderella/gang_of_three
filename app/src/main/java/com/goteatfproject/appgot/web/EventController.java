@@ -1,8 +1,11 @@
 package com.goteatfproject.appgot.web;
 
-import com.goteatfproject.appgot.service.*;
-import com.goteatfproject.appgot.vo.*;
-
+import com.goteatfproject.appgot.service.EventService;
+import com.goteatfproject.appgot.vo.AttachedFile;
+import com.goteatfproject.appgot.vo.Criteria;
+import com.goteatfproject.appgot.vo.Event;
+import com.goteatfproject.appgot.vo.Member;
+import com.goteatfproject.appgot.vo.PageMaker;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,8 +19,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,9 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/event/")
 public class EventController {
 
-
-//  TicketService ticketService;
-  MemberService memberService;
   EventService eventService;
   ServletContext sc;
 
@@ -47,7 +50,7 @@ public class EventController {
 
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
-    pageMaker.setTotalCount(50);
+    pageMaker.setTotalCount(10);
 
     List<Map<String, Object>> list = eventService.selectEventList(cri);
     mv.addObject("list", list);
@@ -201,11 +204,5 @@ public class EventController {
     }
     return "redirect:detail?no=" + event.getNo();
   }
-
-// @RestController
-//  public Map<String,Object> list(map) throws Exception {
-//Map<String, Object> map = new HashMap<>(String, Object)(map);
-//
-//  }
 
 }
