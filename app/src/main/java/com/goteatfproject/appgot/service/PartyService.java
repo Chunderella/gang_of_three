@@ -52,6 +52,6 @@ public interface PartyService {
   // 댓글 삭제
   boolean deleteComment(int no) throws Exception;
 
-//메인페이지 게시글 노출
+//메인페이지 게시글 노출(String 으로 값받기)
 List<Party> mainList(String meal, String food) throws Exception;
 }

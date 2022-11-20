@@ -2,6 +2,8 @@ package com.goteatfproject.appgot.vo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,20 +16,19 @@ public class Event {
   private String title;
   private String content;
 
-
-
-  private int money;
-
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date date;
   private String location;
   private String address;
   private int viewCnt;
   private boolean pub;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date createDate;
   private String thumbnail;
 
   private String calrander;
+
+  private int cost;
 
 
   private Member writer;
@@ -41,4 +42,6 @@ public class Event {
   public void setAttachedFiles(List<AttachedFile> attachedFiles) {
     this.attachedFiles = attachedFiles;
   }
+
+
 }

@@ -46,7 +46,9 @@ public interface EventDao {
   //메인페이지 파티게시물 조회
   List<Event> findAllMain();
 
+  //결제 수량
   int payCnt();
-
+  //결제 여부
   boolean ticketing(Map<String, Object> ticket);
+  
 }

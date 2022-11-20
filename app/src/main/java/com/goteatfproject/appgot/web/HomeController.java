@@ -10,8 +10,6 @@ import com.goteatfproject.appgot.vo.Party;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletContext;
@@ -32,13 +30,11 @@ public class HomeController {
     this.sc = sc;
   }
 
-<<<<<<< HEAD
-  @RequestMapping("/")
-  public String List(Model model) throws Exception {
-=======
+  
+  //메인페이지에서 버튼을 눌렀을때 게시물을 노출시키기 위해서 
+  //mainList(meal,food) 추가함
   @GetMapping("/")
   public String List(Model model,String meal, String food) throws Exception {
->>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
     model.addAttribute("feeds",feedService.mainList());
     model.addAttribute("events",eventService.mainList());
     model.addAttribute("parties",partyService.mainList(meal, food));
@@ -47,8 +43,6 @@ public class HomeController {
 
     return "index";
   }
-
-
 
 }
 

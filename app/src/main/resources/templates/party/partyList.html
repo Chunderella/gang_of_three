@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BEBECO</title>
+  <title>Bootstrap demo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
@@ -12,11 +12,6 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link href="/css/board/boardstyle.css" rel="stylesheet">
-  <!-- jquery -->
-  <script src="https://code.jquery.com/jquery-3.6.1.js"
-          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-          crossorigin="anonymous"></script>
-  <!-- jquery end-->
 </head>
 <body>
 <!-------------------------------구분선-------------------------->
@@ -46,21 +41,19 @@
     <!------------------------------- 카테고리 -------------------------->
 
     <select id="mealSelect" onchange="categoryChange()">
-      <option value="all">원하는 파티를 선택해주세요</option>
+      <option data-th-text="${meal}">원하는 파티를 선택해주세요</option>
       <option value="점심">점심파티</option>
       <option value="저녁">저녁파티</option>
       <option value="야식">야식파티</option>
       <option value="술">술파티</option>
       <option value="디저트">디저트파티</option>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
     </select>
 
     <select id="foodSelect" onchange="categoryChange2()">
-      <option value="all">원하는 종류를 선택해주세요</option>
+      <option data-th-if="${food != null}" data-th-text="${food}">원하는 종류를 선택해주세요</option>
+      <option data-th-if="${food == null}">원하는 종류를 선택해주세요</option>
       <option value="한식">한식</option>
       <option value="분식">분식</option>
       <option value="중식">중식</option>
@@ -72,55 +65,23 @@
       <option value="동남아식">동남아식</option>
     </select>
 
-    <!------------------------------- 카테고리 메뉴 선택 스크립트 -------------------------->
-    <script th:inline="javascript">
-      let mealValue = [[${meal}]];
-      console.log(mealValue);
-
-      let mealOptionLength = $("#mealSelect").find("option").length;
-      for(let i = 0; i < mealOptionLength; i++) {
-        if($("#mealSelect").find("option").eq(i).val() == mealValue) {
-          $("#mealSelect").find("option").eq(i).attr("selected", true);
-        }
-      }
-
-      let foodValue = [[${food}]]
-      console.log(foodValue);
-
-      let foodOptionLength = $("#foodSelect").find("option").length;
-      for(let i = 0; i < foodOptionLength; i++) {
-        if($("#foodSelect").find("option").eq(i).val() == foodValue) {
-          $("#foodSelect").find("option").eq(i).attr("selected", true);
-        }
-      }
-    </script>
-
-    <!------------------------------- 카테고리 필터 스크립트 -------------------------->
-    <script th:inline="javascript">
+    <!------------------------------- 카테고리 스크립트 -------------------------->
+    <script>
       function categoryChange() {
         let mealSelect = document.getElementById("mealSelect"); // 원하는 meal data를 가져온다
         let mealValue = mealSelect.options[document.getElementById(
-                "mealSelect").selectedIndex].value; // 셀렉트된 선택된 값을 가져온다
-
-        console.log(foodValue == null);
-        if(foodValue != null) {
-          window.location.href = "/party/list?meal=" + mealValue + "&food=" + foodValue;
-        } else {
-          window.location.href = "/party/list?meal=" + mealValue;
-        }
+            "mealSelect").selectedIndex].value; // 셀렉트된 선택된 값을 가져온다
+        window.location.href = "/party/list" + "?meal=" + mealValue; // 그 값을 서버에 넘겨준다 -> 파티컨트롤러로 이동
       }
 
       function categoryChange2() {
+        let url = location.href; // 내 현재 창의 url을 전부 가져온다
+        // let urlParam = location.search; // 현재 창의 url 뒤에 붙어있는 파라미터 값을 전부 가져온다
+
         // 2차 카테고리 아이디 값을 가져온다
         let foodSelect = document.getElementById("foodSelect");
+
         // 그 아이디 값을 가져와서 셀렉트박스(<select id="foodSelect" onchange="categoryChange2()">) 안에서 선택한 option value 값을 가져온다 (예: 중식 선택  -> 중식)
-<<<<<<< HEAD
-        let foodValue = foodSelect.options[document.getElementById("foodSelect").selectedIndex].value;
-        if(foodValue == 'all') {
-          window.location.href = "/party/list?meal=" + mealValue;
-        } else {
-          window.location.href = "/party/list?meal=" + mealValue + "&food=" + foodValue;
-=======
         let foodValue = foodSelect.options[document.getElementById(
             "foodSelect").selectedIndex].value;
 
@@ -136,41 +97,8 @@
           //window.location.href = "/party/list" + urlParam + "&food=" + foodValue;
 
           window.location.href = url + "&food=" + foodValue;
->>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
         }
       }
-      /*       function categoryChange() {
-              let mealSelect = document.getElementById("mealSelect"); // 원하는 meal data를 가져온다
-              let mealValue = mealSelect.options[document.getElementById(
-                  "mealSelect").selectedIndex].value; // 셀렉트된 선택된 값을 가져온다
-              window.location.href = "/party/list" + "?meal=" + mealValue; // 그 값을 서버에 넘겨준다 -> 파티컨트롤러로 이동
-            }
-
-            function categoryChange2() {
-              let url = location.href; // 내 현재 창의 url을 전부 가져온다
-              // let urlParam = location.search; // 현재 창의 url 뒤에 붙어있는 파라미터 값을 전부 가져온다
-
-              // 2차 카테고리 아이디 값을 가져온다
-              let foodSelect = document.getElementById("foodSelect");
-
-              // 그 아이디 값을 가져와서 셀렉트박스(<select id="foodSelect" onchange="categoryChange2()">) 안에서 선택한 option value 값을 가져온다 (예: 중식 선택  -> 중식)
-              let foodValue = foodSelect.options[document.getElementById(
-                  "foodSelect").selectedIndex].value;
-
-              // 2차 분류부터 검사 시작
-              if (url.includes("food")) { // food 값이 들어있으면
-
-                // 예: url.substring(url.lastIndexOf("&"), length) => 중식 값을 날린 url + 새로 선택한 food 값을 연결
-                // lastIndexOf("&"), length) : &부터 url length끝까지
-                window.location.href = url.substring(url.lastIndexOf("&"), length) + "&food=" + foodValue;
-              } else if (url.includes("meal")) { // food가 선택이 안되어있는 상태 일 때 1차 카테고리 선택 후
-
-                // "/party/list" =>  1차 카테고리 선택 된 상태인  현재의 url 값을 가져온다 + 새로 선택한 food 값을 연결 => 다시 2차 카테고리를 선택하게 되면 if문 2차 분류 검사로 다시 돌아간다
-                //window.location.href = "/party/list" + urlParam + "&food=" + foodValue;
-
-                window.location.href = url + "&food=" + foodValue;
-              }
-            } */
     </script>
 
     <!------------------------------- 카테고리 스크립트 end -------------------------->
@@ -251,8 +179,8 @@
               <div class="cd-footer bg-light">
                 <div class="container">
                   <div class="row justify-content-center">
-                    <!--                    <a class="btn btn-primary xx-join1" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-th-id="${party.no}">참여하기</a>-->
-                    <!-- 세션이 널이 아니면 참여버튼 활성화 // 참여자 멤버 번호가 세션 번호랑 같으면 활성화                   -->
+<!--                    <a class="btn btn-primary xx-join1" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-th-id="${party.no}">참여하기</a>-->
+                  <!-- 세션이 널이 아니면 참여버튼 활성화 // 참여자 멤버 번호가 세션 번호랑 같으면 활성화                   -->
                     <a data-th-if="${session.loginMember != null}" class="btn btn-primary xx-join1" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-th-id="${party.no}">참여하기</a>
                     <div class="line-2"></div>
                     <button data-th-if="${session.loginMember != null}" type="button" class="btn btn-outline-success"><a th:href="@{../volunteer/detail(no=${party.no})}">참여자정보</a></button>
@@ -284,22 +212,22 @@
                 </div>
               </div>
 
-              <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">파티 참석 시</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      이 파티에 참석하셨습니다.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">파티 참석 시</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    이 파티에 참석하셨습니다.
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
               <!-- 구버전 버튼 확인용 -->
 
@@ -347,7 +275,7 @@
         </div>
       </div>
     </div>
-    <!--        <div th:replace="modal/buttonmodal :: #addbutton"></div>-->
+<!--        <div th:replace="modal/buttonmodal :: #addbutton"></div>-->
 
     <!--        <div id="party-board">-->
     <!--      <div class="container text-center">-->
@@ -423,26 +351,26 @@
     <!-------------------------------구분선-------------------------->
     <div class="line-3"></div>
     <!-------------------------------페이지-------------------------->
-    <!--    <nav aria-label="Page navigation example">-->
-    <!--      <ul class="pagination justify-content-center">-->
-    <!--        <li class="page-item disabled" th:if="${pageMaker.prev}">-->
-    <!--          <a class="page-link"-->
-    <!--             th:href="@{list(pageMaker.startPage-1)}" aria-label="Previous">-->
-    <!--            <span aria-hidden="true">이전페이지</span>-->
-    <!--          </a>-->
-    <!--        </li>-->
-    <!--        <th:block th:each="pageNum: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">-->
-    <!--          <li class="page-item">-->
-    <!--            <a class="page-link" th:href="@{list(page=${pageNum})}"><i th:text="${pageNum}"></i></a>-->
-    <!--          </li>-->
-    <!--        </th:block>-->
-    <!--        <li class="page-item" th:if="${pageMaker.next && pageMaker.endPage >0}">-->
-    <!--          <a class="page-link" th:href="@{list(page=${pageMaker.endPage+1})}" aria-label="Next">-->
-    <!--            <span aria-hidden="true">다음페이지</span>-->
-    <!--          </a>-->
-    <!--        </li>-->
-    <!--      </ul>-->
-    <!--    </nav>-->
+<!--    <nav aria-label="Page navigation example">-->
+<!--      <ul class="pagination justify-content-center">-->
+<!--        <li class="page-item disabled" th:if="${pageMaker.prev}">-->
+<!--          <a class="page-link"-->
+<!--             th:href="@{list(pageMaker.startPage-1)}" aria-label="Previous">-->
+<!--            <span aria-hidden="true">이전페이지</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <th:block th:each="pageNum: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">-->
+<!--          <li class="page-item">-->
+<!--            <a class="page-link" th:href="@{list(page=${pageNum})}"><i th:text="${pageNum}"></i></a>-->
+<!--          </li>-->
+<!--        </th:block>-->
+<!--        <li class="page-item" th:if="${pageMaker.next && pageMaker.endPage >0}">-->
+<!--          <a class="page-link" th:href="@{list(page=${pageMaker.endPage+1})}" aria-label="Next">-->
+<!--            <span aria-hidden="true">다음페이지</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </nav>-->
     <!-------------------------------페이지 end-------------------------->
     <!-------------------------------구분선-------------------------->
     <div class="line-3"></div>
@@ -457,13 +385,20 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
       </ul>
-      <p class="text-center text-muted">© 2022 Chunderella Corp & ThreeAppleteam. All Rights Reserved.</p>
+      <p class="text-center text-muted">© 2022 Chunderella Corp & TwoAppleteam. All Rights
+        Reserved.</p>
     </footer>
 
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
             crossorigin="anonymous"></script>
+    <!-- jquery end-->
 
     <script>
 
@@ -515,7 +450,7 @@
 </html>
 
 
-<!--<!— e.preventDefault() 행위를 막는 —>-->
-<!--<!— <tbody data-page-no="1" data-page-size="3" data-max-page-no="5"> —>-->
-<!--<!— encodeURIComponent(keyword) —>-->
-<!--<!— 이전 또는 다음 최대에 도착하면 버튼 비활성화 태그가 있음 —>-->
+<!-- e.preventDefault() 행위를 막는 -->
+<!-- <tbody data-page-no="1" data-page-size="3" data-max-page-no="5"> -->
+<!-- encodeURIComponent(keyword) -->
+<!-- 이전 또는 다음 최대에 도착하면 버튼 비활성화 태그가 있음 -->

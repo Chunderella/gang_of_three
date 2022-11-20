@@ -171,7 +171,7 @@
                         <p class="card-text" th:text="'[' + ${event.content} + ']'"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:text="'[관리자 ' + ${event.writer.nick} + ']'"></li>
+                        <li class="list-group-item" th:text="'작성자 : [' + ${event.writer.nick} + ']'"></li>
                         <li class="list-group-item" th:text="'파티일 ' + '[' + ${#dates.format(event.date, 'yyyy-MM-dd')} + ']'"></li>
                         <li class="list-group-item" th:text="'장소 ' + '[' + ${event.location} + ']'"></li>
                     </ul>

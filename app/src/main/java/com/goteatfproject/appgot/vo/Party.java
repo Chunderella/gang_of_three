@@ -21,10 +21,7 @@ public class Party {
   private int max;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//  @JsonProperty("time")
-//  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
-  //date에서 수정 l.d.t
-  private LocalDateTime time;
+  private Date time; // 모임시간
 
   private int age;
   private int limit;
@@ -33,6 +30,7 @@ public class Party {
   private String address;
   private int viewCnt;
   private boolean pub;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date createDate;
   private String thumbnail;
 

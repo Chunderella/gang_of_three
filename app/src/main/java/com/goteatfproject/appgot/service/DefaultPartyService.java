@@ -141,7 +141,7 @@ public class DefaultPartyService implements PartyService {
     return partyDao.deleteComment(no) > 0;
   }
 
-  //메인페이지에서 뽑는 파티리스트
+  //메인페이지에서 뽑는 파티리스트(String 받기)
   @Override
   public List<Party> mainList(String meal, String food) throws Exception {
     return partyDao.findAllMain(meal, food);

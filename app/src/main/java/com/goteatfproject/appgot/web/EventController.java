@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
@@ -138,7 +137,6 @@ public class EventController {
     }
     Map map = new HashMap();
     map.put("event", event);
-    System.out.println("123 : " + map);
     return map;
   }
 
@@ -203,21 +201,26 @@ public class EventController {
     return "redirect:detail?no=" + event.getNo();
   }
 
+  //결제정보를 받아오는 컨트롤러
   @ResponseBody
-  @RequestMapping(value="ticketing" , method=RequestMethod.GET)
-  public String ticketing(@RequestParam Map<String, Object> map, HttpSession session) {
-    String user = (String)session.getAttribute("loginMember");
-    map.put("mno",user);
+  @RequestMapping(value="ticketing" , method= RequestMethod.GET)
+  public String ticketing(@RequestParam HashMap<String, Object> map, HttpSession session) {
 
+    Member member = (Member) session.getAttribute("loginMember");
+
+    map.put("mno",member.getNo());
     System.out.println(map);
-    System.out.println(map.get("eno"));
-    System.out.println(map.get("paycnt"));
+//    System.out.println(map.get("eno"));
+//    System.out.println(map.get("paycnt"));
     boolean result = false;
-//    result = insert하세요 서비스를 인설트하는것
+
+    result = eventService.ticketing(map);
+    
     if(result == true){
       return "1";
     }else {
       return "0";
     }
   }
+
 }
