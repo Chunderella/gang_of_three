@@ -311,12 +311,12 @@
   </select>
 
 
-  <insert id="insert" parameterType="event"
-          useGeneratedKeys="true" keyColumn="eno" keyProperty="no">
+<!--  <insert id="insert" parameterType="event"-->
+<!--          useGeneratedKeys="true" keyColumn="eno" keyProperty="no">-->
 
-  insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)
-  VALUES
-  (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
+<!--  insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)-->
+<!--  VALUES-->
+<!--  (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )-->
 
 
 </mapper>

@@ -10,6 +10,8 @@ import com.goteatfproject.appgot.vo.Party;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletContext;
@@ -30,7 +32,7 @@ public class HomeController {
     this.sc = sc;
   }
 
-  @GetMapping("/")
+  @RequestMapping("/")
   public String List(Model model) throws Exception {
     model.addAttribute("feeds",feedService.mainList());
     model.addAttribute("events",eventService.mainList());
@@ -38,6 +40,8 @@ public class HomeController {
 
     return "index";
   }
+
+
 
 }
 

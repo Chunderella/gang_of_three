@@ -5,10 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.goteatfproject.appgot.service.MemberService;
 import com.goteatfproject.appgot.vo.Member;
 
@@ -27,6 +24,17 @@ public class LoginController {
 
     model.addAttribute("id", id);
     return "auth/login"; // TODO login 다시 복구
+  }
+
+
+  @RequestMapping("/kakao Login")
+  public String kakaoLogin(){
+
+    System.out.println("kakao");
+
+
+
+    return "";
   }
 
   @PostMapping("/login")
