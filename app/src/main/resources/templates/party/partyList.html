@@ -52,6 +52,11 @@
       <option value="야식">야식파티</option>
       <option value="술">술파티</option>
       <option value="디저트">디저트파티</option>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
     </select>
 
     <select id="foodSelect" onchange="categoryChange2()">
@@ -109,11 +114,29 @@
         // 2차 카테고리 아이디 값을 가져온다
         let foodSelect = document.getElementById("foodSelect");
         // 그 아이디 값을 가져와서 셀렉트박스(<select id="foodSelect" onchange="categoryChange2()">) 안에서 선택한 option value 값을 가져온다 (예: 중식 선택  -> 중식)
+<<<<<<< HEAD
         let foodValue = foodSelect.options[document.getElementById("foodSelect").selectedIndex].value;
         if(foodValue == 'all') {
           window.location.href = "/party/list?meal=" + mealValue;
         } else {
           window.location.href = "/party/list?meal=" + mealValue + "&food=" + foodValue;
+=======
+        let foodValue = foodSelect.options[document.getElementById(
+            "foodSelect").selectedIndex].value;
+
+        // 2차 분류부터 검사 시작
+        if (url.includes("food")) { // food 값이 들어있으면
+
+          // 예: url.substring(url.lastIndexOf("&"), length) => 중식 값을 날린 url + 새로 선택한 food 값을 연결
+          // lastaIndexOf("&"), length) : &부터 url length끝까지
+          window.location.href = url.substring(url.lstIndexOf("&"), length) + "&food=" + foodValue;
+        } else if (url.includes("meal")) { // food가 선택이 안되어있는 상태 일 때 1차 카테고리 선택 후
+
+          // "/party/list" =>  1차 카테고리 선택 된 상태인  현재의 url 값을 가져온다 + 새로 선택한 food 값을 연결 => 다시 2차 카테고리를 선택하게 되면 if문 2차 분류 검사로 다시 돌아간다
+          //window.location.href = "/party/list" + urlParam + "&food=" + foodValue;
+
+          window.location.href = url + "&food=" + foodValue;
+>>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
         }
       }
       /*       function categoryChange() {
@@ -149,6 +172,7 @@
               }
             } */
     </script>
+
     <!------------------------------- 카테고리 스크립트 end -------------------------->
 
     <!------------------------------- 카테고리 end -------------------------->

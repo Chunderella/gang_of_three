@@ -32,11 +32,18 @@ public class HomeController {
     this.sc = sc;
   }
 
+<<<<<<< HEAD
   @RequestMapping("/")
   public String List(Model model) throws Exception {
+=======
+  @GetMapping("/")
+  public String List(Model model,String meal, String food) throws Exception {
+>>>>>>> e287dd734f0068cebe4ab2678dad4e980d0e624b
     model.addAttribute("feeds",feedService.mainList());
     model.addAttribute("events",eventService.mainList());
-    model.addAttribute("parties",partyService.mainList());
+    model.addAttribute("parties",partyService.mainList(meal, food));
+    model.addAttribute("meal", meal);
+    model.addAttribute("food", food);
 
     return "index";
   }
