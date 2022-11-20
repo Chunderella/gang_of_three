@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div class="container"  th:fragment="fragment-eventindex">
+<div id="event-board" th:fragment="fragment-eventindex" >
     <div class="container text-center">
         <div class="row">
-            <div class="col-9 p-3">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col-9 ">
+                <div class="row row-cols-4 ">
+                    <div class="col border rounded bg-white" th:each="event : ${events}">
+                        <div id="card card-cover border p-3">
+
+                            <div class="header p-1">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="card-haeder" th:text="'['+ ${event.title} + ']'"></h3>
+                                    </div>
+                                </div>
 
 
-                    <div class="card" style="width: 18rem;"  th:each="event : ${events}">
+                            </div>
+                            <div class="tumbnail">
+                                <a th:href="@{/event/detail(no=${event.no})}"><img id="thumbNail"
+                                                                                   th:src="@{/event/files/{path}(path=${event.thumbnail})}"
+                                                                                   class="img-thumbnail" alt="이미지가 없습니다."></a>
+                            </div>
 
-                        <div class="tumbnail">
-                            <a th:href="@{/event/detail(no=${event.no})}"><img id="thumbNail"
-                                                                        th:src="@{/event/files/{path}(path=${event.thumbnail})}"
-                                                                        class="img-thumbnail" alt="이미지가 없습니다."></a>
-                        </div>
+                            <div class="card-body1 p-1 border-bottom">
+                                <p class="card-title" th:text=" ${event.content}"></p>
+                            </div>
+
+                            <div class="card-body2 border-bottom">
+                                <p class="card-text" th:text="'관리자 :' + ${event.writer.nick}"></p>
+                            </div>
+
+                            <div class="card-body3 border-bottom"   data-th-text="${#temporals.format(event.date, 'yy-MM-dd')}">
+                            </div>
 
 
-                        <div class="card-body">
-                            <h5 class="card-title"th:text="${event.title}"></h5>
-                            <p class="card-text"th:text="${event.writer.nick}"></p>
-                            <a href="#" class="btn btn-primary">참가하기</a>
+
+
+                            <div class="card-body4 p-1">
+                                <a th:href="@{/event/detail(no=${event.no})}" class="btn btn-primary">참여하기</a>
+                            </div>
+
+
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
             <!-------------------------------side--#center로 옮겨야함------------------------>
             <div class="col-3">
@@ -34,6 +55,7 @@
                 <div th:replace="/common/sidecard2.html :: fragment-sidecard2"></div>
 
             </div>
+
         </div>
     </div>
 </div>

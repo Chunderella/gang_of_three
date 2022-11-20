@@ -12,7 +12,10 @@
   <result column="loc" property="location"/>
   <result column="post" property="post"/>
 
-  <result column="addr" property="address"/>
+    <result column="money" property="money"/>
+
+
+    <result column="addr" property="address"/>
   <result column="viewcnt" property="viewCnt"/>
   <result column="pub" property="pub"/>
   <result column="createdate" property="createDate"/>
@@ -55,6 +58,38 @@
     VALUES
     (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
   </insert>
+
+<!--  <insert id="ticketing" parameterMap="map">-->
+<!--    insert into-->
+<!--      ticket-->
+<!--        (-->
+<!--          tno,-->
+<!--          mno,-->
+<!--          eno,-->
+<!--          pay,-->
+<!--          paydate,-->
+<!--          paycnt-->
+<!--        )-->
+<!--      values-->
+<!--        (-->
+<!--          #{tno},-->
+<!--          #{mno},-->
+<!--          #{eno},-->
+<!--          #{pay},-->
+<!--          now(),-->
+<!--          #{paycnt}-->
+<!--        )-->
+
+<!--  </insert>-->
+
+<!--  <select id="payCnt" resultMap="int" parameterMap="map">-->
+<!--    select-->
+<!--      sum(paycnt)-->
+<!--    from-->
+<!--      ticket-->
+<!--    where-->
+<!--      eno = #{eno}-->
+<!--  </select>-->
 
 
 
@@ -149,6 +184,7 @@
     e.createdate,
     m.nick,
     m.mno,
+    e.money,
     ef.efileno,
     ef.path
     from
@@ -274,6 +310,13 @@
     limit 6
   </select>
 
+
+  <insert id="insert" parameterType="event"
+          useGeneratedKeys="true" keyColumn="eno" keyProperty="no">
+
+  insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)
+  VALUES
+  (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
 
 
 </mapper>

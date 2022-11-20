@@ -11,7 +11,11 @@
   <result column="date" property="date"/>
   <result column="loc" property="location"/>
   <result column="post" property="post"/>
-  <result column="addr" property="address"/>
+
+    <result column="money" property="money"/>
+
+
+    <result column="addr" property="address"/>
   <result column="viewcnt" property="viewCnt"/>
   <result column="pub" property="pub"/>
   <result column="createdate" property="createDate"/>
@@ -22,12 +26,12 @@
     <result column="nick" property="nick"/>
   </association>
 
-  <collection property="attachedFiles" ofType="attachedFile">
-    <id column="efileno" property="no"/>
-    <result column="path" property="filepath"/>
-    <result column="filename" property="fileName"/>
-    <result column="savename" property="saveName"/>
-  </collection>
+    <collection property="attachedFiles" ofType="attachedFile">
+      <id column="efileno" property="no"/>
+      <result column="path" property="filepath"/>
+      <result column="filename" property="fileName"/>
+      <result column="savename" property="saveName"/>
+    </collection>
 
   </resultMap>
 
@@ -40,15 +44,14 @@
 
   </resultMap>
 
-
   <insert id="insert" parameterType="event"
           useGeneratedKeys="true" keyColumn="eno" keyProperty="no">
 
 
-<!--    insert into party(mno, meal, food, title, cont, gender, max, time, age,-->
-<!--    lit, loc, post, addr, viewcnt, createdate, thumbnail)-->
-<!--    values(#{writer.no}, #{meal}, #{food}, #{title}, #{content}, #{gender}, #{max},-->
-<!--    #{time}, #{age}, #{limit}, #{location}, '', #{address}, 0, now(), #{thumbnail})-->
+    <!--    insert into party(mno, meal, food, title, cont, gender, max, time, age,-->
+    <!--    lit, loc, post, addr, viewcnt, createdate, thumbnail)-->
+    <!--    values(#{writer.no}, #{meal}, #{food}, #{title}, #{content}, #{gender}, #{max},-->
+    <!--    #{time}, #{age}, #{limit}, #{location}, '', #{address}, 0, now(), #{thumbnail})-->
 
 
     insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)
@@ -56,40 +59,50 @@
     (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
   </insert>
 
+<!--  <insert id="ticketing" parameterMap="map">-->
+<!--    insert into-->
+<!--      ticket-->
+<!--        (-->
+<!--          tno,-->
+<!--          mno,-->
+<!--          eno,-->
+<!--          pay,-->
+<!--          paydate,-->
+<!--          paycnt-->
+<!--        )-->
+<!--      values-->
+<!--        (-->
+<!--          #{tno},-->
+<!--          #{mno},-->
+<!--          #{eno},-->
+<!--          #{pay},-->
+<!--          now(),-->
+<!--          #{paycnt}-->
+<!--        )-->
+
+<!--  </insert>-->
+
+<!--  <select id="payCnt" resultMap="int" parameterMap="map">-->
+<!--    select-->
+<!--      sum(paycnt)-->
+<!--    from-->
+<!--      ticket-->
+<!--    where-->
+<!--      eno = #{eno}-->
+<!--  </select>-->
 
 
-  <select id="findAll" resultMap="eventMap" >
-  select
-  e.eno,
-  m.mno,
-  e.title,
-  e.cont,
-  e.date,
-  e.loc,
-  e.addr,
-  e.viewcnt,
-  e.pub,
-  e.createdate,
-  e.thumbnail
 
-  from event e
-
-  join member m on e.mno = m.mno
-   order by
-      eno desc
-limit 8
-  </select>
-
-
-
-  <!--페이징 목록-->
-
+  <!--페이징 목록 -->
+  <!--닉네임추가했음-->
   <select id="selectEventList" resultMap="eventMap" parameterType="hashmap">
     <![CDATA[
   select
   e.eno,
   m.mno,
-      m.nick,
+
+  m.nick,
+
   e.title,
   e.cont,
   e.date,
@@ -101,27 +114,77 @@ limit 8
   e.thumbnail
 
   from event e
-
+  
   join member m on e.mno = m.mno
    order by
       eno desc
       LIMIT #{pageStart}, #{perPageNum}
       ]]>
-
   </select>
+
+  <!--페이징 목록: 마이페이지 본인 작성 글 리스트 출력 사용-->
+  <select id="selectEventList2" resultMap="eventMap" parameterType="hashmap">
+    <![CDATA[
+  select
+  e.eno,
+  m.mno,
+  e.title,
+  e.cont,
+  e.date,
+  e.loc,
+  e.addr,
+  e.viewcnt,
+  e.pub,
+  e.createdate,
+  e.thumbnail
+
+  from event e
+  
+  join member m on e.mno = m.mno
+  where m.mno =#{memberNo}
+   order by
+      eno desc
+      LIMIT #{cri.pageStart}, #{cri.perPageNum}
+      ]]>
+  </select>
+  
+  <!--페이징 목록: 관리자페이지 리스트 출력 사용-->
+  <select id="selectEventList3" resultMap="eventMap" parameterType="hashmap">
+    <![CDATA[
+  select
+  e.eno,
+  m.mno,
+  m.nick,
+  e.title,
+  e.cont,
+  e.date,
+  e.loc,
+  e.addr,
+  e.viewcnt,
+  e.pub,
+  e.createdate,
+  e.thumbnail
+
+  from event e
+  
+  join member m on e.mno = m.mno
+  where e.pub = false
+   order by
+      eno desc
+      LIMIT #{pageStart}, #{perPageNum}
+      ]]>
+  </select>
+  
 
   <select id="findByNo" resultMap="eventMap">
     select
     e.eno,
     e.title,
-    e.cont,
     e.viewcnt,
     e.createdate,
-    e.loc,
-    e.date,
-    e.addr,
     m.nick,
     m.mno,
+    e.money,
     ef.efileno,
     ef.path
     from
@@ -144,11 +207,6 @@ limit 8
     delete from event
     where eno = #{value}
   </delete>
-
-
-
-
-
 
 
   <insert id="insertFiles" parameterType="event">
@@ -198,6 +256,60 @@ limit 8
     delete from event_file
     where eno in (select eno from event where mno = #{value})
   </delete>
+  
+   <!--관리자페이지 이벤트게시글 비활성화 (1: 비활성화)-->
+  <update id="eventBlock" parameterType="event">
+    update event set pub = true
+    where eno = #{no}
+  </update>
+
+  <!--이벤트 리스트에 뽑는 쿼리문-->
+  <select id="findAll" resultMap="eventMap" >
+    select
+    e.eno,
+    m.mno,
+    e.title,
+    e.cont,
+    e.date,
+    e.loc,
+    e.addr,
+    e.viewcnt,
+    e.pub,
+    e.createdate,
+    e.thumbnail
+
+    from event e
+
+    join member m on e.mno = m.mno
+    order by
+    eno desc
+
+  </select>
+
+  <!--메인에뽑는 리스트-->
+    <select id="findAllMain" resultMap="eventMap" >
+    select
+    e.eno,
+    m.mno,
+      m.nick,
+    e.title,
+    e.cont,
+    e.date,
+    e.loc,
+    e.addr,
+    e.viewcnt,
+    e.pub,
+    e.createdate,
+    e.thumbnail
+
+    from event e
+
+    join member m on e.mno = m.mno
+    order by
+    eno desc
+    limit 6
+  </select>
+
 
 
 </mapper>

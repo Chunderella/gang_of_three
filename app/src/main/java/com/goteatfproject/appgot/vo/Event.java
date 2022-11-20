@@ -14,6 +14,10 @@ public class Event {
   private String title;
   private String content;
 
+
+
+  private int money;
+
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date date;
   private String location;

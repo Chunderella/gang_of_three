@@ -103,6 +103,12 @@ public class DefaultEventService implements EventService {
   public List<Event> mainList() throws Exception {
     return eventDao.findAllMain();
   }
+  public int getPayCnt(){
+    return eventDao.payCnt();
+  }
 
+  public boolean ticketing(Map<String, Object> ticket){
+    return eventDao.ticketing(ticket);
+  }
 
 }

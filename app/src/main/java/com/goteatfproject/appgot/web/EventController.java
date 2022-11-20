@@ -16,14 +16,11 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -141,6 +138,7 @@ public class EventController {
     }
     Map map = new HashMap();
     map.put("event", event);
+    System.out.println("123 : " + map);
     return map;
   }
 
@@ -205,4 +203,21 @@ public class EventController {
     return "redirect:detail?no=" + event.getNo();
   }
 
+  @ResponseBody
+  @RequestMapping(value="ticketing" , method=RequestMethod.GET)
+  public String ticketing(@RequestParam Map<String, Object> map, HttpSession session) {
+    String user = (String)session.getAttribute("loginMember");
+    map.put("mno",user);
+
+    System.out.println(map);
+    System.out.println(map.get("eno"));
+    System.out.println(map.get("paycnt"));
+    boolean result = false;
+//    result = insert하세요 서비스를 인설트하는것
+    if(result == true){
+      return "1";
+    }else {
+      return "0";
+    }
+  }
 }

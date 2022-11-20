@@ -31,4 +31,7 @@ public interface EventService {
  //메인페이지 이벤트게시글 조회
   List<Event> mainList() throws Exception;
 
+  int getPayCnt();
+
+  boolean ticketing(Map<String,Object> ticket);
 }

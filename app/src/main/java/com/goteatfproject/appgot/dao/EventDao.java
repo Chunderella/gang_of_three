@@ -46,4 +46,7 @@ public interface EventDao {
   //메인페이지 파티게시물 조회
   List<Event> findAllMain();
 
+  int payCnt();
+
+  boolean ticketing(Map<String, Object> ticket);
 }
