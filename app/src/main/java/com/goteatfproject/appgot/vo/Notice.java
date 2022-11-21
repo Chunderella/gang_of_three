@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.List;
 
 
 @Getter @Setter @ToString
@@ -14,4 +15,5 @@ public class Notice {
   private String title;
   private String content;
   private Date createDate;
+  private Member writer;
 }
