@@ -16,6 +16,7 @@
     <result column="intro" property="intro"/>
     <result column="thumbnail" property="thumbnail"/>
     <result column="outstate" property="outState"/>
+    <result column="KAKAOID" property="kakaoid"/>
   </resultMap>
 
   <insert id="insert" useGeneratedKeys="true" parameterType="member">
@@ -240,5 +241,15 @@
     where
     mno = #{no}
   </update>
+
+  <select id="selectKakaoId" parameterType="long" resultMap="memberMap">
+    select * from member where KAKAOID = #{value}
+  </select>
+
+
+<!--  <select id="" parameterType="" resultMap="memberMap">
+    select * from member where KAKAOID = #{value}
+  </select>-->
+
 
 </mapper>

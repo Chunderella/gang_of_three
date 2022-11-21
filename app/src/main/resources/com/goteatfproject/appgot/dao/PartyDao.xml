@@ -398,7 +398,7 @@
     from
     party p
     join member m on m.mno = p.mno
-    <if test="meal != 'all'">
+    <if test="meal != null">
       where p.meal = #{meal}
     </if>
     order by

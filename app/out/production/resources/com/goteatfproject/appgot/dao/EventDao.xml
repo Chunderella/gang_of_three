@@ -12,19 +12,32 @@
   <result column="loc" property="location"/>
   <result column="post" property="post"/>
 
-    <result column="money" property="money"/>
 
-
-    <result column="addr" property="address"/>
+  <result column="addr" property="address"/>
   <result column="viewcnt" property="viewCnt"/>
   <result column="pub" property="pub"/>
   <result column="createdate" property="createDate"/>
   <result column="thumbnail"  property="thumbnail"/>
 
-  <association property="writer" javaType="member">
+    <result column="cost" property="cost"/>
+
+
+
+    <association property="writer" javaType="member">
     <id column="mno" property="no"/>
     <result column="nick" property="nick"/>
   </association>
+
+<!--    <association property="ticketing" javaType="ticket">-->
+<!--      <id column="tno" property="ticketNo"/>-->
+<!--      <result column="pay" property="pay"/>-->
+<!--      <result column="paydate" property="paydate"/>-->
+<!--      <result column="paycnt" property="paycnt"/>-->
+<!--      <result column="cancel" property="cancel"/>-->
+<!--      <result column="totalcost" property="totalcost"/>-->
+
+<!--    </association>-->
+
 
     <collection property="attachedFiles" ofType="attachedFile">
       <id column="efileno" property="no"/>
@@ -58,38 +71,6 @@
     VALUES
     (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
   </insert>
-
-<!--  <insert id="ticketing" parameterMap="map">-->
-<!--    insert into-->
-<!--      ticket-->
-<!--        (-->
-<!--          tno,-->
-<!--          mno,-->
-<!--          eno,-->
-<!--          pay,-->
-<!--          paydate,-->
-<!--          paycnt-->
-<!--        )-->
-<!--      values-->
-<!--        (-->
-<!--          #{tno},-->
-<!--          #{mno},-->
-<!--          #{eno},-->
-<!--          #{pay},-->
-<!--          now(),-->
-<!--          #{paycnt}-->
-<!--        )-->
-
-<!--  </insert>-->
-
-<!--  <select id="payCnt" resultMap="int" parameterMap="map">-->
-<!--    select-->
-<!--      sum(paycnt)-->
-<!--    from-->
-<!--      ticket-->
-<!--    where-->
-<!--      eno = #{eno}-->
-<!--  </select>-->
 
 
 
@@ -182,15 +163,21 @@
     e.title,
     e.viewcnt,
     e.createdate,
+    e.cont,
+    e.cost,
+    e.loc,
+    e.addr,
+    e.date,
+
     m.nick,
     m.mno,
-    e.money,
     ef.efileno,
     ef.path
     from
     event e
     join member m on m.mno = e.mno
     left outer join event_file ef on e.eno = ef.eno
+
     where
     e.eno = #{value}
   </select>
@@ -311,13 +298,26 @@
   </select>
 
 
-<!--  <insert id="insert" parameterType="event"-->
-<!--          useGeneratedKeys="true" keyColumn="eno" keyProperty="no">-->
+    <insert id="ticketing" parameterType="Hashmap">
+      insert into
+        ticket
+          (
+            eno,
+          totalcost,
+       mno,
+          paycnt
 
-<!--  insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)-->
-<!--  VALUES-->
-<!--  (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )-->
 
+          )
+        values
+          (
+            #{eno},
+           #{totalcost},
+           #{mno},
+            #{paycnt}
+
+          )
+    </insert>
 
 </mapper>
 

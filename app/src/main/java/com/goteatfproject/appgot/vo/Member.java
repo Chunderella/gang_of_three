@@ -39,4 +39,23 @@ public class Member {
   private long profileSize;
   private String profileContentType;
 
+  private long kakaoId;
+
+
+
+  public long getKakaoId() {
+    return kakaoId;
+  }
+
+  public void setKakaoId(long kakaoId) {
+    this.kakaoId = kakaoId;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 }

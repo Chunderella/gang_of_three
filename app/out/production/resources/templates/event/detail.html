@@ -23,12 +23,16 @@
           rel="stylesheet">
     <!-- 서머노트css end-->
 
-<!--결제관련---->
+    <!--결제관련---->
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 
 <body>
@@ -71,10 +75,10 @@
                 </a>
 
                 <ul class="dropdown-menu text-small ">
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">New project...</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" th:href="@{/my/main}">마이페이지</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">설정</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">프로필</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">New project...</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" th:href="@{/my/main}">마이페이지</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">설정</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">프로필</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -99,118 +103,139 @@
 <div class="a-example-divider"></div>
 <!---------------------------- 상세보기 ------------------------------>
 
-<div class="container">
+<div class="container p-3  border rounded text-center">
 
-        <form th:action="@{/event/update}" method="post" enctype="multipart/form-data">
-        <div class="container text-center border rounded">
-            <input name="no" type="number" value="1" th:value="${event.no}" readonly hidden/>
-            <div class="line-3"></div>
+    <div class="row p-3 border-bottom">
+        <div class="col">
+            <div class="eventNo">
+                <p th:value="${event.no}"></p>
+            </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-2">
-                </div>
-                <div class="col-8">
-                  <h2 th:text="${event.title}"></h2>
-                </div>
-                <div class="col"-2>
-            </div>
-            </div>
-            <div class="row">
-                <div class="col-1">
-                    <span>내용</span>
-                </div>
-                <div class="col-10 border rounded">
-                    <span th:value="${event.content}"></span>
-                </div>
-                <div class="col">
-                </div>
-            </div>
+
+    <div class="row p-3 border-bottom">
+        <div class="col">
+
+            <h2 th:text="${event.title}"></h2>
+
+        </div>
+    </div>
+
+    <div class="row p-3">
+        <div class="col">
+            <p th:text="'작성자 : ' + ${event.writer.nick}"> </p>
+        </div>
+
+        <div class="col">
+            <p th:text="'작성일 : ' + ${#dates.format(event.createDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+        </div>
+
+        <div class="col">
+            <p th:text="'조회수 : ' + ${event.viewCnt}"></p>
+        </div>
+
+    </div>
+
+    <div class="row p-3">
+        <div class="col p-3">
+
+            <textarea id="summernote" name='content'th:value="${event.content}"> </textarea>
+
+        </div>
+    </div>
+
+</div> <!--컨테이너 끝!!!!!-->
+
+<div class ="container rounded border">
+    <div class="row p-3">
+        <div class="col">
+            <h4><b>파티정보</b></h4>
+        </div>
+    </div>
+
+    <div class="row p-3">
+        <div class="col">
+            <p th:text="'장소명 : ' + ${event.location}"></p>
+        </div>
+
+        <div class="col">
+            <p th:text="'상세주소 : ' + ${event.address}"></p>
+        </div>
+
+        <div class="col">
+            <p th:text="'파티일 : ' + ${#dates.format(event.date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+        </div>
+    </div>
 
 </div>
 
+<form>
+    <div class ="container rounded border">
+        <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
+        <div class="row p-3">
+            <div class="col">
+                <h4><b>이벤트 입장권 구매하기</b></h4>
+            </div>
+        </div>
+
+        <div class="row p-3">
+            <div class="col">
+                <span id="cost" th:text="  ${event.cost}"></span>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="paycnt">  <p>수량</p>
+                <input id="paycnt" type="number"/>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="totalcost">  <p  id="totalcost" th:text="'총금액 : ' + ${event.cost} + '원'"> </p>
+
+            </div>
+
+        </div>
+
+
+        <button onclick="requestPay()">결제하기</button>
 
 
 
-        <table border='1'>
-            <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
-            <tr>
-                <th>제목</th><td><input name='title' type='text'
-                                      value='제목'
-                                      th:value="${event.title}"
-                                      size='60'></td>
-            </tr>
-            <tr>
-                <th>내용</th><td><textarea id="summernote" name='content'th:value="${event.content}"> </textarea></td>
-            </tr>
-            <tr>
-                <th>조회수</th><td id="cnt" th:text="${event.viewCnt}"></td>
-            </tr>
-            <tr>
-                <th>작성자</th><td id="nick" th:text="${event.writer.nick}"></td>
-            </tr>
+    </div>
+    </div>
+</form>
 
-            <tr>
-                <th>금액</th><td id = "money" th:text="${event.money}"></td>
-            </tr>
-
-
-            <tr>
-                <th>총금액</th><td id = "totalMoney" th:text="${event.money}"></td>
-            </tr>
-            <tr>
-                <th>등록일</th><td id = "createDate" th:text="${event.createDate}"></td>
-            </tr>
-<div class="count">
-    <input id="paycnt" type="number"/>
-</div>
-
-            <!------------ 파일첨부 ------------>
-            <tr>
-                <th>첨부파일</th>
-                <td>
-                    <ul>
-                        <li data-th-each="file : ${event.attachedFiles}">
-                            <!-- {path} = path=${file.filepath} -->
-                            <a href=""
-                               data-th-href="@{files/{path}(path=${file.filepath})}"
-                               data-th-text="${file.filepath}">test.gif</a>
-                            [<a href="fileDelete?no=1"
-                                data-th-href="@{fileDelete(no=${file.no})}">파일삭제</a>]
-                        </li>
-                    </ul>
-                    파일 추가: <input name='files' type="file" multiple>
-                </td>
-            </tr>
-            <!------------ 파일첨부 end------------>
-        </table>
-
-    </form>
-</div>
 <script>
-    var totalMoney = 0;
+    var totalcost = 0;
 
     $('#paycnt').on('change',function (e){
-        var money = $("#money").text();
-        var totalMoney =(money * e.target.value);
-        $("#totalMoney").text(totalMoney);
+        var cost = $("#cost").text();
+        var totalcost =(cost * e.target.value);
+        $("#totalcost").text(totalcost);
         console.log(e.target.value);
 
-        console.log("123 :  " , totalMoney);
+        console.log("금액 :  " , totalcost);
 
     })
     function requestPay(){
-        let totalMoney = $("#totalMoney").text();
+        let totalcost = $("#totalcost").text();
         let eno = $("#eno").val();
         let paycnt = $("#paycnt").val();
+        let now = new Date();
+        // console.log("현재 : ", now);
+        // let paydate = $("#paydate").val();
+        console.log(totalcost);
         console.log(eno);
 
 
         let ticket = {
-            money : totalMoney,
+            totalcost : totalcost,
             eno : eno,
-            paycnt : paycnt
+            paycnt : paycnt,
+            paydate : now
         };
-        alert(ticket.money);
 
         $.ajax({
             url : "/event/ticketing",
@@ -221,8 +246,7 @@
             success:function (result){
                 if(result == "1"){
                     alert("결제성공");
-                   window.location.reload();
-                }else{
+                }else if (result == "0"){
                     alert("결제에 실패하셨습니다. 문의해주세요.");
                 }
             },
@@ -233,53 +257,12 @@
 
         });
 
-        console.log(money);
-
-
+        console.log(cost);
     }
-
-
 
 </script>
 
 
-
-<button onclick="requestPay()">결제하기</button>
-<button class="btn btn-default btn-cart">장바구니</button>
-<button class="btn btn-default btn-wishlist">위시리스트</button>
-------------------------------------------------
-<script>
-    function iamport(){
-        //가맹점 식별코드
-        var IMP = window.IMP;
-        IMP.init('imp30146952');
-        IMP.request_pay({
-            pg : 'kcp',
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '상품1' , //결제창에서 보여질 이름
-            amount : 100, //실제 결제되는 가격
-            buyer_email : 'iamport@siot.do',
-            buyer_name : '구매자이름',
-            buyer_tel : '010-1234-5678',
-            buyer_addr : '서울 강남구 도곡동',
-            buyer_postcode : '123-456'
-        }, function(rsp) {
-            console.log(rsp);
-            if ( rsp.success ) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-            }
-            alert(msg);
-        });
-    }
-</script>
 
 
 <!---------------------------- 상세보기 end ------------------------------>
@@ -309,42 +292,6 @@
 <!-- 서머노트 end -->
 
 
-
-
-<script>
-
-    $
-
-
-</script>
-
-
-<script>
-    var IMP = window.IMP; // 생략가능
-    IMP.init('imp75675775'); // <-- 본인 가맹점 식별코드 삽입
-
-
-</script>
-
-
-
-
-<script>
-    $(".btn-order").click(function() {
-        location.assign("/order/insert");
-    });
-
-    $(".btn-cart").click(function() {
-        var check = confirm("상품이 장바구니에 담겼습니다. 확인하시겠습니까?");
-        if (check) {
-            location.assign("/order/cart");
-        }
-    });
-
-    $(".btn-wishlist").click(function() {
-        alert("상품을 위시리스트에 추가하였습니다.");
-    });
-</script>
 <!-- 서머노트 -->
 <script>
     $(document).ready(function() {
@@ -352,8 +299,8 @@
 
         $('textarea[name=content]').summernote({
             toolbar:false,
-            height: 600,
-            width:1200,
+            height: 300,
+            width: 1140,
             minHeight : null,
             maxHeight : null,
             disableDragAndDrop: true
@@ -366,6 +313,5 @@
 
 </body>
 </html>
-
 
 

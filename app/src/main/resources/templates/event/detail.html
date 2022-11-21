@@ -23,7 +23,7 @@
           rel="stylesheet">
     <!-- 서머노트css end-->
 
-<!--결제관련---->
+    <!--결제관련---->
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
@@ -75,10 +75,10 @@
                 </a>
 
                 <ul class="dropdown-menu text-small ">
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">New project...</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" th:href="@{/my/main}">마이페이지</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">설정</a></li>
-                  <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">프로필</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">New project...</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" th:href="@{/my/main}">마이페이지</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">설정</a></li>
+                    <li th:if="${session.loginMember != null}"><a class="dropdown-item" href="#">프로필</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -171,17 +171,17 @@
 </div>
 
 <form>
-<div class ="container rounded border">
-    <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
-    <div class="row p-3">
-        <div class="col">
-            <h4><b>이벤트 입장권 구매하기</b></h4>
+    <div class ="container rounded border">
+        <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
+        <div class="row p-3">
+            <div class="col">
+                <h4><b>이벤트 입장권 구매하기</b></h4>
+            </div>
         </div>
-    </div>
 
-    <div class="row p-3">
-        <div class="col">
-           <span id="cost" th:text="${event.cost}"></span>
+        <div class="row p-3">
+            <div class="col">
+                <span id="cost" th:text="  ${event.cost}"></span>
             </div>
         </div>
 
@@ -196,15 +196,15 @@
 
             </div>
 
+        </div>
+
+
+        <button onclick="requestPay()">결제하기</button>
+
+
+
     </div>
-
-
-    <button onclick="requestPay()">결제하기</button>
-
-
-
-</div>
-</div>
+    </div>
 </form>
 
 <script>
@@ -223,7 +223,7 @@
         let totalcost = $("#totalcost").text();
         let eno = $("#eno").val();
         let paycnt = $("#paycnt").val();
-        // let now = new Date();
+        let now = new Date();
         // console.log("현재 : ", now);
         // let paydate = $("#paydate").val();
         console.log(totalcost);
@@ -234,6 +234,7 @@
             totalcost : totalcost,
             eno : eno,
             paycnt : paycnt,
+            paydate : now
         };
 
         $.ajax({
@@ -257,188 +258,11 @@
         });
 
         console.log(cost);
-
-
     }
-
-
 
 </script>
 
 
-<script>
-    /*아임포트 카카오페이 결제*/
-    $('#paymentBtn').click(function () {
-        var IMP = window.IMP;
-        IMP.init('TC0ONETIME');
-
-        //DOM객체들에서 사용할 데이터 뽑기
-        var paymentGoods = $('input[name="paymentOrderName"]').val();
-        var money = $('.totalprice').text();
-        var memberName = $('input[name="memberName"]').val();
-        var memberEmail = $('input[name="memberEmail"]').val();
-        var memberPhone = $('input[name="memberPhone"]').val();
-
-        var len = memberEmail.indexOf("@");
-        var memberId = memberEmail.substr(0, len);
-
-
-        IMP.request_pay({
-            //카카오페이 결제시 사용할 정보 입력
-            pg: 'card',
-            paymentCode: 'p' + new Date().getTime()+'_'+memberId,
-            name: paymentGoods,
-            amount: money,
-            buyer_email: memberEmail,
-            buyer_name: memberName,
-            buyer_tel: memberPhone,
-        }, function (rsp) {
-            //결제 완료시
-            if (rsp.success) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-
-                /*
-                만약 데이터들을 ajax로 보낼 시 사용할 코드
-                $.ajax({
-                    type: "GET",
-                    url: "/mypage/mypaymentList/paymentDetail",
-                    data: {
-                        "amount" : money
-                    },
-                });
-                */
-
-                $('#paymentForm').submit();
-
-            } else {
-                //결제 실패시
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-
-                if($('input[name="eClassApprovedSetDate"]').length){
-                    document.location.href="/mypage/mySignUpForClassList"; //alert창 확인 후 이동할 url 설정
-                }else {
-                    document.location.href="/challenge/challengeGather/challengeGatherList"; //alert창 확인 후 이동할 url 설정
-                }
-            }
-            alert(msg);
-        });
-    });
-    </script>
-
-
-
-<!--        <form th:action="@{/event/update}" method="post" enctype="multipart/form-data">-->
-<!--        <div class="container text-center border rounded">-->
-<!--            <input name="no" type="number" value="1" th:value="${event.no}" readonly hidden/>-->
-<!--            <div class="line-3"></div>-->
-
-<!--            <div class="row">-->
-<!--                <div class="col-2">-->
-<!--                </div>-->
-<!--                <div class="col-8">-->
-
-<!--                </div>-->
-<!--                <div class="col"-2>-->
-<!--            </div>-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col-1">-->
-<!--                    <span>내용</span>-->
-<!--                </div>-->
-<!--                <div class="col-10 border rounded">-->
-<!--                    <span th:value="${event.content}"></span>-->
-<!--                </div>-->
-<!--                <div class="col">-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--</div>-->
-
-
-
-
-<!--        <table border='1'>-->
-<!--            <input name="no" type="number" value="1" th:value="${event.no}" readonly hidden/>-->
-<!--            <tr>-->
-<!--                <th>제목</th><td><input name='title' type='text'-->
-<!--                                      value='제목'-->
-<!--                                      th:value="${event.title}"-->
-<!--                                      size='60'></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th>조회수</th><td th:text="${event.viewCnt}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th>작성자</th><td th:text="${event.writer.nick}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th>등록일</th><td th:date="${event.createDate}"></td>-->
-<!--            </tr>-->
-<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; 파일첨부 &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--            <tr>-->
-<!--                <th>첨부파일</th>-->
-<!--                <td>-->
-<!--                    <ul>-->
-<!--                        <li data-th-each="file : ${event.attachedFiles}">-->
-<!--                            &lt;!&ndash; {path} = path=${file.filepath} &ndash;&gt;-->
-<!--                            <a href=""-->
-<!--                               data-th-href="@{files/{path}(path=${file.filepath})}"-->
-<!--                               data-th-text="${file.filepath}">test.gif</a>-->
-<!--                            [<a href="fileDelete?no=1"-->
-<!--                                data-th-href="@{fileDelete(no=${file.no})}">파일삭제</a>]-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                    파일 추가: <input name='files' type="file" multiple>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; 파일첨부 end&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        </table>-->
-
-<!--    </form>-->
-<!--</div>-->
-
-
-
-
-<!--<button onclick="requestPay()">결제하기</button>-->
-<!--<button class="btn btn-default btn-cart">장바구니</button>-->
-<!--<button class="btn btn-default btn-wishlist">위시리스트</button>-->
-<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-<!--<script>-->
-<!--    function iamport(){-->
-<!--        //가맹점 식별코드-->
-<!--        IMP.init('imp30146952');-->
-<!--        IMP.request_pay({-->
-<!--            pg : 'kcp',-->
-<!--            pay_method : 'card',-->
-<!--            merchant_uid : 'merchant_' + new Date().getTime(),-->
-<!--            name : '상품1' , //결제창에서 보여질 이름-->
-<!--            amount : 100, //실제 결제되는 가격-->
-<!--            buyer_email : 'iamport@siot.do',-->
-<!--            buyer_name : '구매자이름',-->
-<!--            buyer_tel : '010-1234-5678',-->
-<!--            buyer_addr : '서울 강남구 도곡동',-->
-<!--            buyer_postcode : '123-456'-->
-<!--        }, function(rsp) {-->
-<!--            console.log(rsp);-->
-<!--            if ( rsp.success ) {-->
-<!--                var msg = '결제가 완료되었습니다.';-->
-<!--                msg += '고유ID : ' + rsp.imp_uid;-->
-<!--                msg += '상점 거래ID : ' + rsp.merchant_uid;-->
-<!--                msg += '결제 금액 : ' + rsp.paid_amount;-->
-<!--                msg += '카드 승인번호 : ' + rsp.apply_num;-->
-<!--            } else {-->
-<!--                var msg = '결제에 실패하였습니다.';-->
-<!--                msg += '에러내용 : ' + rsp.error_msg;-->
-<!--            }-->
-<!--            alert(msg);-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
 
 
 <!---------------------------- 상세보기 end ------------------------------>
@@ -467,91 +291,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <!-- 서머노트 end -->
 
-<script>
-    var IMP = window.IMP; // 생략가능
-    IMP.init('imp75675775'); // <-- 본인 가맹점 식별코드 삽입
 
-
-</script>
-<script>
-
-/*아임포트 카카오페이 결제*/
-$('#paymentBtn').click(function () {
-var IMP = window.IMP;
-IMP.init('아임포트 본인 가맹점식별코드');
-
-//DOM객체들에서 사용할 데이터 뽑기
-var paymentGoods = $('input[name="paymentOrderName"]').val();
-var money = $('.totalprice').text();
-var memberName = $('input[name="memberName"]').val();
-var memberEmail = $('input[name="memberEmail"]').val();
-var memberPhone = $('input[name="memberPhone"]').val();
-
-var len = memberEmail.indexOf("@");
-var memberId = memberEmail.substr(0, len);
-
-
-IMP.request_pay({
-//카카오페이 결제시 사용할 정보 입력
-pg: 'card',
-paymentCode: 'p' + new Date().getTime()+'_'+memberId,
-name: paymentGoods,
-amount: money,
-buyer_email: memberEmail,
-buyer_name: memberName,
-buyer_tel: memberPhone,
-}, function (rsp) {
-//결제 완료시
-if (rsp.success) {
-var msg = '결제가 완료되었습니다.';
-msg += '카드 승인번호 : ' + rsp.apply_num;
-
-/*
-만약 데이터들을 ajax로 보낼 시 사용할 코드
-$.ajax({
-type: "GET",
-url: "/mypage/mypaymentList/paymentDetail",
-data: {
-"amount" : money
-},
-});
-*/
-
-$('#paymentForm').submit();
-
-} else {
-//결제 실패시
-var msg = '결제에 실패하였습니다.';
-msg += '에러내용 : ' + rsp.error_msg;
-
-if($('input[name="eClassApprovedSetDate"]').length){
-document.location.href="/mypage/mySignUpForClassList"; //alert창 확인 후 이동할 url 설정
-}else {
-document.location.href="/challenge/challengeGather/challengeGatherList"; //alert창 확인 후 이동할 url 설정
-}
-}
-alert(msg);
-});
-});
-</script>
-
-
-<script>
-    $(".btn-order").click(function() {
-        location.assign("/order/insert");
-    });
-
-    $(".btn-cart").click(function() {
-        var check = confirm("상품이 장바구니에 담겼습니다. 확인하시겠습니까?");
-        if (check) {
-            location.assign("/order/cart");
-        }
-    });
-
-    $(".btn-wishlist").click(function() {
-        alert("상품을 위시리스트에 추가하였습니다.");
-    });
-</script>
 <!-- 서머노트 -->
 <script>
     $(document).ready(function() {
@@ -573,6 +313,5 @@ alert(msg);
 
 </body>
 </html>
-
 
 

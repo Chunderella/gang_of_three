@@ -13,6 +13,8 @@ public class DefaultMemberService implements MemberService {
   @Autowired
   MemberDao memberDao;
 
+
+
   @Override
   public void add(Member member) throws Exception {
     memberDao.insert(member);
@@ -112,4 +114,9 @@ public class DefaultMemberService implements MemberService {
     return memberDao.memberActive(no) > 0;
   }
 
+
+  @Override
+  public Member selectKakaoId(long kakaoId) throws Exception {
+    return memberDao.selectKakaoId(kakaoId);
+  }
 }

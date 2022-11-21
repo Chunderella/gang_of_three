@@ -254,8 +254,6 @@
       path,
       bno
       from
-      party_file
-      where
       pno = #{value}
     </select>
 
@@ -400,6 +398,9 @@
     from
     party p
     join member m on m.mno = p.mno
+    <if test="meal != null">
+      where p.meal = #{meal}
+    </if>
     order by
     pno desc
     limit 8

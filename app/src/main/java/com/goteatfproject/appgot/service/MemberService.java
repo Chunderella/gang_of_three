@@ -55,4 +55,7 @@ public interface MemberService {
   boolean memberBlock(int no);
 
   boolean memberActive(int no);
-}
+
+  Member selectKakaoId(long kakaoId) throws Exception;
+
+ }

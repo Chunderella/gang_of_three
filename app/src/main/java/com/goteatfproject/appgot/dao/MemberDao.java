@@ -2,8 +2,12 @@ package com.goteatfproject.appgot.dao;
 
 import com.goteatfproject.appgot.vo.Member;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import javax.sound.midi.MetaMessage;
 
 @Mapper
 public interface MemberDao {
@@ -59,4 +63,7 @@ public interface MemberDao {
 
   // 관리자페이지 활성화
   int memberActive(int no);
+
+  Member selectKakaoId(long kakaoId);
+
 }

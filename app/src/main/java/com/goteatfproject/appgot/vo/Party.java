@@ -11,6 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter @Setter @ToString
 public class Party {
 
+//메인 목록을 디폴트로 출력하기 위해 추가함
+  Party() {
+    this.meal=null;
+  }
   private int no; 
   private String meal;
   private String food;
