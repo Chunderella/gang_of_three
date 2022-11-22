@@ -203,7 +203,7 @@ public class EventController {
 
   //결제정보를 받아오는 컨트롤러
   @ResponseBody
-  @RequestMapping(value="ticketing" , method= RequestMethod.GET)
+  @RequestMapping(value="ticketing" , method= RequestMethod.POST)
   public String ticketing(@RequestParam HashMap<String, Object> map, HttpSession session) {
 
     Member member = (Member) session.getAttribute("loginMember");
@@ -221,6 +221,11 @@ public class EventController {
     }else {
       return "0";
     }
+  }
+
+  @GetMapping("test")
+  public String test() {
+    return "event/test";
   }
 
 }
