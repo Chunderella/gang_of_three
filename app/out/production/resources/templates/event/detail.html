@@ -207,19 +207,19 @@
 
         <script>
             var IMP = window.IMP;   // 생략 가능
-            IMP.init("imp50338484"); // 예: imp00000000
+            IMP.init("imp75675775"); // 예: imp00000000
 
-            // var totalcost = 0;
-            //
-            // $('#paycnt').on('change',function (e){
-            //     var cost = $("#cost").text();
-            //     var totalcost =(cost * e.target.value);
-            //     $("#totalcost").text(totalcost);
-            //     console.log(e.target.value);
-            //
-            //     console.log("금액 :  " , totalcost);
-            //
-            // })
+            var totalcost = 0;
+
+            $('#paycnt').on('change',function (e){
+                var cost = $("#cost").text();
+                var totalcost =(cost * e.target.value);
+                $("#totalcost").text(totalcost);
+                console.log(e.target.value);
+
+                console.log("금액 :  " , totalcost);
+
+            })
 
             $("#test").click(function() {
                 IMP.request_pay({
@@ -235,19 +235,20 @@
                     buyer_postcode: "01181"
                 }, function (rsp) { // callback
                     if (rsp.success) {
+                        console.log(eno)
                         sendRequestPay();
                         alert("결제에 성공했습니다.")
                     }
                 });
             });
-
             function sendRequestPay(){
+                console.log("========================================>")
                 let totalcost = $("#totalcost").text();
                 let eno = $("#eno").val();
                 let paycnt = $("#paycnt").val();
                 let now = new Date();
-                // console.log("현재 : ", now);
-                // let paydate = $("#paydate").val();
+                console.log("현재 : ", now);
+                let paydate = $("#paydate").val();
                 console.log(totalcost);
                 console.log(eno);
 
@@ -261,9 +262,9 @@
 
                 $.ajax({
                     url : "/event/ticketing",
-                    type : 'POST',
+                    type : 'post',
                     data : ticket,
-                    dataType : 'json',
+                    dataType : JSON.stringify(ticket),
                     contentType:'application/json; charset=UTF-8' ,
                     success:function (result){
                         if(result == "1"){
@@ -288,7 +289,6 @@
 
     </div>
     </div>
-</form>
 
 <!--<script>-->
 <!--    var totalcost = 0;-->
