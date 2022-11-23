@@ -16,7 +16,10 @@ public interface EventDao {
 
   List<Event> findAll();
 
+  
+  //페이징 처리하는 리스트
   List<Map<String, Object>> selectEventList(Criteria cri);
+
 
   Event findByNo(int no);
 

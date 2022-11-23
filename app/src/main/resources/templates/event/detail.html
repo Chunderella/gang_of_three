@@ -107,7 +107,12 @@
 <div class="a-example-divider"></div>
 <!---------------------------- 상세보기 ------------------------------>
 
-<div class="container p-3  border rounded text-center">
+
+<div class = "container-fluid" style="background-image:url('/images/1.jpg') ">
+
+
+
+<div class="container bg-white p-3  border rounded text-center">
 
     <div class="row p-3 border-bottom">
         <div class="col">
@@ -151,14 +156,14 @@
 
 </div> <!--컨테이너 끝!!!!!-->
 
-<div class ="container rounded border">
+<div class ="container rounded border bg-white">
     <div class="row p-3">
         <div class="col">
             <h4><b>파티정보</b></h4>
         </div>
     </div>
 
-    <div class="row p-3">
+    <div class="row p-3 border-bottom">
         <div class="col">
             <p th:text="'장소명 : ' + ${event.location}"></p>
         </div>
@@ -175,7 +180,7 @@
 </div>
 
 
-    <div class ="container rounded border">
+    <div class ="container rounded border bg-white">
         <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
         <div class="row p-3">
             <div class="col">
@@ -185,7 +190,7 @@
 
         <div class="row p-3">
             <div class="col">
-                <span id="cost" th:text="  ${event.cost}"></span>
+                <span id="cost" th:text="  ${event.cost}"></span>원
             </div>
         </div>
 
@@ -201,95 +206,94 @@
             </div>
 
         </div>
+        <button id="test">결제하기</button>
+        <div class="line-3"></div>
     </div>
-
-<button id="test">결제하기</button>
-
-        <script>
-            var IMP = window.IMP;   // 생략 가능
-            IMP.init("imp75675775"); // 예: imp00000000
-
-            var totalcost = 0;
-
-            $('#paycnt').on('change',function (e){
-                var cost = $("#cost").text();
-                var totalcost =(cost * e.target.value);
-                $("#totalcost").text(totalcost);
-                console.log(e.target.value);
-
-                console.log("금액 :  " , totalcost);
-
-            })
-
-            $("#test").click(function() {
-                IMP.request_pay({
-                    pg: 'kakaopay',
-                    pay_method: 'kakaopay',
-                    merchant_uid: parseInt(Date.now() + (Math.random() * 1000)),
-                    name: "노르웨이 회전 의자",
-                    amount: 64900,                         // 숫자타입
-                    buyer_email: "gildong@gmail.com",
-                    buyer_name: "홍길동",
-                    buyer_tel: "010-4242-4242",
-                    buyer_addr: "서울특별시 강남구 신사동",
-                    buyer_postcode: "01181"
-                }, function (rsp) { // callback
-                    if (rsp.success) {
-                        console.log(eno)
-                        sendRequestPay();
-                        alert("결제에 성공했습니다.")
-                    }
-                });
-            });
-            function sendRequestPay(){
-                console.log("========================================>")
-                let totalcost = $("#totalcost").text();
-                let eno = $("#eno").val();
-                let paycnt = $("#paycnt").val();
-                let now = new Date();
-                console.log("현재 : ", now);
-                let paydate = $("#paydate").val();
-                console.log(totalcost);
-                console.log(eno);
+    </div>
+    </div>
+</div>
 
 
-                let ticket = {
-                    totalcost : totalcost,
-                    eno : eno,
-                    paycnt : paycnt,
-                    paydate : now
-                };
 
-                $.ajax({
-                    url : "/event/ticketing",
-                    type : 'post',
-                    data : ticket,
-                    dataType : JSON.stringify(ticket),
-                    contentType:'application/json; charset=UTF-8' ,
-                    success:function (result){
-                        if(result == "1"){
-                            alert("결제성공");
-                        }else if (result == "0"){
-                            alert("결제에 실패하셨습니다. 문의해주세요.");
-                        }
-                    },
-                    error(error){
-                        alert("통신 에러 문의해주세요.");
-                        console.log(error.status);
-                    }
+<script>
+    var IMP = window.IMP;   // 생략 가능
+    IMP.init("imp75675775"); // 예: imp00000000
 
-                });
+    var totalcost = 0;
 
-                console.log(cost);
+    $('#paycnt').on('change',function (e){
+        var cost = $("#cost").text();
+        var totalcost =(cost * e.target.value);
+        $("#totalcost").text(totalcost);
+        console.log(e.target.value);
+
+        console.log("금액 :  " , totalcost);
+
+    })
+
+    $("#test").click(function() {
+        IMP.request_pay({
+            pg: 'kakaopay',
+            pay_method: 'kakaopay',
+            merchant_uid: parseInt(Date.now() + (Math.random() * 1000)),
+            name: "노르웨이 회전 의자",
+            amount: 64900,                         // 숫자타입
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181"
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(eno)
+                sendRequestPay();
+                alert("결제에 성공했습니다.")
+            }
+        });
+    });
+    function sendRequestPay(){
+        console.log("========================================>")
+        let totalcost = $("#totalcost").text();
+        let eno = $("#eno").val();
+        let paycnt = $("#paycnt").val();
+        let now = new Date();
+        console.log("현재 : ", now);
+        let paydate = $("#paydate").val();
+        console.log(totalcost);
+        console.log(eno);
+
+
+        let ticket = {
+            totalcost : totalcost,
+            eno : eno,
+            paycnt : paycnt,
+            paydate : now
+        };
+
+        $.ajax({
+            url : "/event/ticketing",
+            type : 'post',
+            data : ticket,
+            dataType : JSON.stringify(ticket),
+            contentType:'application/json; charset=UTF-8' ,
+            success:function (result){
+                if(result == "1"){
+                    alert("결제성공");
+                }else if (result == "0"){
+                    alert("결제에 실패하셨습니다. 문의해주세요.");
+                }
+            },
+            error(error){
+                alert("통신 에러 문의해주세요.");
+                console.log(error.status);
             }
 
-        </script>
+        });
 
+        console.log(cost);
+    }
 
-
-    </div>
-    </div>
-
+</script>
 <!--<script>-->
 <!--    var totalcost = 0;-->
 
@@ -362,24 +366,24 @@
 </footer>
 
 
-<!-- 서머노트 -->
-<!--<script>-->
-<!--    $(document).ready(function() {-->
-<!--        $('textarea[name=content]').html('[[${event.content}]]')-->
+ 서머노트
+<script>
+    $(document).ready(function() {
+        $('textarea[name=content]').html('[[${event.content}]]')
 
-<!--        $('textarea[name=content]').summernote({-->
-<!--            toolbar:false,-->
-<!--            height: 300,-->
-<!--            width: 1140,-->
-<!--            minHeight : null,-->
-<!--            maxHeight : null,-->
-<!--            disableDragAndDrop: true-->
-<!--        });-->
+        $('textarea[name=content]').summernote({
+            toolbar:false,
+            height: 500,
+            width: 1140,
+            minHeight : null,
+            maxHeight : null,
+            disableDragAndDrop: true
+        });
 
-<!--        $('textarea[name=content]').summernote('disable');-->
-<!--    });-->
-<!--</script>-->
-<!-- 서머노트 end-->
+        $('textarea[name=content]').summernote('disable');
+    });
+</script>
+ 서머노트 end
 
 </body>
 </html>

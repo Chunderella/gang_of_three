@@ -71,7 +71,7 @@
     VALUES
     (#{writer.no}, #{title}, #{content},  #{date},  #{location},    #{address},  now(), #{thumbnail} )
   </insert>
-
+<!--COST 추가 예정-->
 
 
   <!--페이징 목록 -->
