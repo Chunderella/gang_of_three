@@ -40,6 +40,9 @@
     <div class="sidebar-heading border-bottom bg-light">고객센터</div>
     <div class="list-group list-group-flush">
       <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/notice/list}">공지사항</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/notice/list}">1대1 문의</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/notice/list}">자주 묻는 질문</a>
+
     </div>
   </div>
 
@@ -70,7 +73,7 @@
           <td data-th-text="${notice.tname}">분류</td>
           <td data-th-text="${notice.no}">번호</td>
           <td data-th-text="${notice.writer.nick}">작성자</td>
-          <td> <a href='detail?no=1' data-th-href="@{detail(no=${notice.no})}" data-th-text="${notice.title}" class="text-dark">제목</a></td>
+          <td> <a data-th-href="@{detail(no=${notice.no})}" data-th-text="${notice.title}" class="text-dark">제목</a></td>
           <td data-th-text="${notice.content}">내용</td>
           <td data-th-text="${notice.createDate}">작성일</td>
         </tr>
