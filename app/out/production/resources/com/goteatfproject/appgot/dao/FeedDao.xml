@@ -311,6 +311,7 @@
     f.title,
     f.cont,
     f.date,
+    m.thumbnail,
     f.thumbnail feedThumbnail
     from
     feed f

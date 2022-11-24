@@ -62,9 +62,9 @@
 <!-- COST 추가 예정 -->
   <insert id="insert" parameterType="event"
           useGeneratedKeys="true" keyColumn="eno" keyProperty="no">
-    insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail)
+    insert into event(mno, title, cont, date, loc, addr, createdate, thumbnail, cost)
     VALUES
-    (#{writer.no}, #{title}, #{content},  #{date},  #{location},  #{address},  now(), #{thumbnail} )
+    (#{writer.no}, #{title}, #{content},  #{date},  #{location},  #{address},  now(), #{thumbnail},#{cost})
   </insert>
 
     <!--페이징 목록 -->

@@ -12,19 +12,8 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link href="/css/style.css" rel="stylesheet">
-
-  <!-- 서머노트css -->
-  <!-- include libraries(jQuery, bootstrap) -->
-  <!--  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
-  <!--        rel="stylesheet">-->
-
-  <!-- include summernote css/js -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
         rel="stylesheet">
-  <!-- 서머노트css end-->
-
-  <!-- jQuery -->
-  <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -44,15 +33,19 @@
     body {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+    #background-img{
+      background-image: url('/images/defaultimage.jpg');
+      Background-repeat: no-repeat ;
+      background-size: cover;
+
+      /*opacity:0.8;*/
+    }
   </style>
   <!-- sweetalert 댓글 마지막 -->
 
   <style>
 
-    #background-img{
-      background-image: url('/images/1.jpg');
-      /*opacity:0.8;*/
-    }
+
 
   </style>
 </head>
@@ -62,7 +55,7 @@
 <div class="b-example-divider"></div>
 <!------------------------------header------------------------------>
 <header class="p-3 mb-3 bg-white border-bottom fixed-top">
-  <div class="container">
+  <div class="container ">
     <div
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a class="navbar-brand" th:href="@{/}">
@@ -125,7 +118,7 @@
 
 <div class = "container-fluid" id="background-img">
 
-  <div class="container bg-white p-3  border rounded text-center">
+  <div class="container bg-white p-3  border rounded border text-center">
 
     <div class="row p-3 border-bottom">
       <div class="col">
@@ -169,13 +162,13 @@
 
   </div> <!--컨테이너 끝!!!!!-->
 
-  <div class ="container rounded border bg-white">
+  <div class ="container rounded border bg-white border-warning">
     <div class="row p-3">
-      <div class="col border-bottom">
+      <div class="col border-bottom text-color-">
         <h4><b>파티정보</b></h4>
       </div>
     </div>
-
+    <div class="line-2"></div>
     <div class="row p-3 border-bottom">
       <div class="col">
         <p th:text="'장소명 : ' + ${event.location}"></p>
@@ -192,11 +185,12 @@
 
   </div>
 
+  <div class="line-2"></div>
 
-  <div class ="container rounded border bg-white">
+  <div class ="container rounded border bg-white border-warning">
     <input style="display: none" name="no" id="eno" type="number" th:value="${event.no}" readonly />
-    <div class="row p-3">
-      <div class="col border-bottom">
+    <div class="row p-3 border-danger">
+      <div class="col border-bottom ">
         <h4><b>이벤트 입장권 구매하기</b></h4>
       </div>
     </div>
@@ -219,22 +213,27 @@
       </div>
 
     </div>
-    <button id="test">결제하기</button>
-    <div class="line-3"></div>
+    <button class="btn btn-outline-warning " id="test">결제하기</button>
+    <div class="line-2"></div>
   </div>
 </div>
 </div>
 </div>
 
-<h5>Comment : </h5>
-<div class="xx-comment-parent">
+<div class="line-2"></div>
+
+<div class ="container">
+  <div class="xx-comment-parent">
   <div class="xx-comment">
   </div>
 </div>
+</div>
 
+<div class="line-2"></div>
 <!-- 댓글 작성 -->
+<div class ="container border-warning">
 <div class="card my-4">
-  <h5 class="card-header">Leave a Comment:</h5>
+  <h5 class="card-header "><b>댓글 : </b></h5>
   <div class="card-body">
     <form name="comment-form" data-th-action="@{/event/comment}" method="post" autocomplete="off">
       <div class="form-group">
@@ -242,9 +241,14 @@
         <input data-th-if="${session.loginMember != null}" name="session" data-th-value="${session.loginMember.getNo()}" hidden/>
         <textarea name="commentCont" class="form-control" rows="3"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">댓글등록</button>
+      <div class="col-3 p-1">
+        <div class="line-2"></div>
+      <button type="submit" class="btn btn-outline-success ">댓글 등록</button>
+      </div>
     </form>
   </div>
+
+</div>
 </div>
 <!-- 댓글 작성 마지막 -->
 
@@ -411,11 +415,12 @@
 
     $('textarea[name=content]').summernote({
       toolbar:false,
-      height: 500,
-      width: 1140,
+      height: 600,
+      width: 1250,
       minHeight : null,
       maxHeight : null,
-      disableDragAndDrop: true
+      disableDragAndDrop: true,
+      lang: "ko-KR",
     });
 
     $('textarea[name=content]').summernote('disable');
@@ -452,13 +457,14 @@
           console.log('로그인no :' + sno) // 로그인 세션 no
           console.log(sno == value.writer.no)
           // console.log(userNo == result[i].writer.no); // 강사님
-          str += "<div class='comment' style='border:3px solid black;'>";
-          str += "<span class='xx-nick'>" + '작성자 : ' + value.writer.nick + "</span><br>";
-          str += "<span class='xx-comment-cont' id='xx-cont" + value.reviewNo + "'>" + '내용 : ' + value.commentCont + "</span><br>";
+          str += "<div class='comment border rounded p-3' ;'>";
+          str += "<div class='line-2'></div>";
+          str += "<div class='xx-nick border-bottom'>" + '작성자 : ' + value.writer.nick + "</div><br>";
+          str += "<div class='xx-comment-cont' id='xx-cont" + value.reviewNo + "'>" + '내용 : ' + value.commentCont + "</div><br>";
           // if (userNo == result[i].writer.no) { // 강사님
           if (sno == value.writer.no) {
-            str += "<button type='button' class='xx-updateComment' id='xx-prno-update" + value.reviewNo + "' name='reviewNo' data-prno='" + value.reviewNo + "' data-mno='" + value.writer.no + "'>댓글 수정</button>";
-            str += "<button type='button' class='xx-deleteComment' id='xx-prno-delete"
+            str += "<button  class='xx-updateComment bg-warning ' id='xx-prno-update" + value.reviewNo + "' name='reviewNo' data-prno='" + value.reviewNo + "' data-mno='" + value.writer.no + "'>댓글 수정</button>";
+            str += "<button  class='xx-deleteComment bg-warning ' id='xx-prno-delete"
                     + value.reviewNo + "' data-prno='" + value.reviewNo
                     + "' data-mno='" + value.writer.no + "'>댓글 삭제</button><br>";
           }
