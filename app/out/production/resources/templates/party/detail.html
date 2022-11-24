@@ -51,7 +51,7 @@
 <div class="a-example-divider"></div>
 
 <!---------------------------- 상세보기 ------------------------------>
-<form th:action="@{/party/update}" method="post" enctype="multipart/form-data">
+<!--<form th:action="@{/party/update}" method="post" enctype="multipart/form-data">-->
   <div class="container border rounded">
 
     <!--1줄-->
@@ -62,7 +62,8 @@
       </div>
       <div class="col-2">
       </div>
-      <div class="col-2" th:text="'(3' + '/' + ${party.max} + ')'">
+<!--      <div class="col-2" th:text="'(3' + '/' + ${party.lit} + ')'">-->
+      <div class="col-2" th:text="'(' + ${party.max} + '/' + ${party.limit} + ')'">
       </div>
 
       <div class="col-2">
@@ -83,10 +84,10 @@
     <div class="row p-3 border-bottom">
       <div class="col-2" th:text="${party.writer.nick}">
       </div>
-      <div class="col-2" th:text=" '조회수:' + ${party.viewCnt}">
+      <div class="col-2" th:text=" '조회수 :' + ${party.viewCnt}">
       </div>
-      <div class="col-2" th:text=" '작성일:' + ${party.createDate}">
-      </div>
+      <div class="col-2" th:text=" '작성일 :' + ${#dates.format(party.createDate, 'yyyy/MMM/dd HH:mm')}"></div>
+<!--      <div class="col-2" th:text=" '작성일:' + ${party.createDate}"></div>-->
 
     </div>
 
@@ -114,8 +115,8 @@
 
     <!--7줄-->
     <div class="row p-3">
-      <div class="col" th:text="'[' + ${#dates.createNowForTimeZone(party.time)} + '시]'">
-      </div>
+      <div class="col" th:text="'[' + ${#dates.format(party.time, 'yyyy/MMM/dd HH:mm')} + ']'"></div>
+<!--      <div class="col" th:text="'[' + ${#dates.createNowForTimeZone(party.time)} + '시]'"></div>-->
     </div>
 
     <!--8줄-->
@@ -125,6 +126,56 @@
       <div class="col-2" th:text="'주소 : ' +'[' + ${party.address} + ']'">
       </div>
     </div>
+
+    <div class="mb-3">
+      <label for="formFileSm" class="form-label">파일</label>
+<!--      <input class="form-control form-control-sm" id="formFileSm" type="file" name="files" multiple>-->
+      <ul class="list-group" data-th-each="file : ${party.attachedFiles}">
+        <li class="list-group-item"><a data-th-href="@{files/{path}(path=${file.filepath})}" data-th-text="${file.filepath}"></a></li>
+      </ul>
+    </div>
+
+    <button data-th-if="${session.loginMember != null}" type="button" class="btn btn-outline-secondary"><a th:href="@{modify(no=${party.no})}">변경</a></button>
+    <button data-th-if="${session.loginMember != null}" type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>
+
+    <h5>Comment : </h5>
+    <div class="xx-comment-parent">
+      <div class="xx-comment">
+
+      </div>
+    </div>
+
+    <!-- 댓글 작성 -->
+<!--    <div class="card my-4">-->
+<!--      <h5 class="card-header">Leave a Comment:</h5>-->
+<!--      <div class="card-body">-->
+<!--        <form name="comment-form" data-th-action="@{/party/comment}" method="post" autocomplete="off">-->
+<!--          <div class="form-group">-->
+<!--            <input type="hidden" name="no" data-th-value="${party.no}"/>-->
+<!--            <input data-th-if="${session.loginMember != null}" name="session" data-th-value="${session.loginMember.getNo()}" hidden/>-->
+<!--            <textarea name="commentCont" class="form-control" rows="3"></textarea>-->
+<!--          </div>-->
+<!--          <button type="submit" class="btn btn-primary">댓글등록</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="card my-4">
+      <h5 class="card-header">댓글 등록 :</h5>
+      <div class="card-body">
+        <form name="comment-form" data-th-action="@{/party/comment}" method="post" autocomplete="off">
+          <div class="form-floating">
+            <input type="hidden" name="no" data-th-value="${party.no}"/>
+            <input data-th-if="${session.loginMember != null}" name="session" data-th-value="${session.loginMember.getNo()}" hidden/>
+            <textarea class="form-control" name="commentCont" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+            <button type="submit" class="btn btn-primary btn-sm">댓글 등록</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 댓글 작성 마지막-->
+
     </div>
 <!--<table border='1'>-->
 <!--  <input name="no" type="number" value="1" th:value="${party.no}" readonly hidden/>-->
@@ -165,37 +216,37 @@
 <!--  </tr>-->
   <!------------ 파일첨부 end------------>
 <!--</table>-->
-  <button type="submit" class="btn btn-outline-secondary">변경</button>
-  <button type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>
-</form>
+<!--  <button type="button" class="btn btn-outline-secondary"><a th:href="@{modify(no=${party.no})}">변경</a></button>-->
+<!--  <button type="button" class="btn btn-outline-secondary"><a th:href="@{delete(no=${party.no})}">삭제</a></button>-->
+<!--</form>-->
 
 <!--                                onclick="location.href='/auth/logout'"-->
-  <h5>Comment : </h5>
-  <div class="xx-comment-parent">
-  <div class="xx-comment">
-  </div>
-  </div>
+<!--  <h5>Comment : </h5>-->
+<!--  <div class="xx-comment-parent">-->
+<!--  <div class="xx-comment">-->
+<!--  </div>-->
+<!--  </div>-->
 
-<!-- 댓글 작성 -->
-  <div class="card my-4">
-    <h5 class="card-header">Leave a Comment:</h5>
-    <div class="card-body">
-      <form name="comment-form" data-th-action="@{/party/comment}" method="post" autocomplete="off">
-        <div class="form-group">
-          <input type="hidden" name="no" data-th-value="${party.no}"/>
-          <input data-th-if="${session.loginMember != null}" name="session" data-th-value="${session.loginMember.getNo()}" hidden/>
-          <textarea name="commentCont" class="form-control" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">댓글등록</button>
-      </form>
-    </div>
-  </div>
-<!-- 댓글 작성 마지막-->
+<!--&lt;!&ndash; 댓글 작성 &ndash;&gt;-->
+<!--  <div class="card my-4">-->
+<!--    <h5 class="card-header">Leave a Comment:</h5>-->
+<!--    <div class="card-body">-->
+<!--      <form name="comment-form" data-th-action="@{/party/comment}" method="post" autocomplete="off">-->
+<!--        <div class="form-group">-->
+<!--          <input type="hidden" name="no" data-th-value="${party.no}"/>-->
+<!--          <input data-th-if="${session.loginMember != null}" name="session" data-th-value="${session.loginMember.getNo()}" hidden/>-->
+<!--          <textarea name="commentCont" class="form-control" rows="3"></textarea>-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">댓글등록</button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--&lt;!&ndash; 댓글 작성 마지막&ndash;&gt;-->
 
 <!---------------------------- 상세보기 end ------------------------------>
 
 <!-------------------------------구분선-------------------------->
-<div class="c-example-divider"></div>
+<div class="line-3"></div>
 <!------------------------------footer------------------------------>
 <footer class="py-3 my-4">
   <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -205,7 +256,7 @@
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
   </ul>
-  <p class="text-center text-muted">© 2022 Chunderella Corp & TwoAppleteam. All Rights Reserved.</p>
+  <p class="text-center text-muted">© 2022 Chunderella Corp & ThreeAppleteam. All Rights Reserved.</p>
 </footer>
 
 <!--  commentTemplate -->
@@ -327,17 +378,19 @@ $(function () {
           console.log('로그인no :' + sno) // 로그인 세션 no
           console.log(sno == value.writer.no)
           // console.log(userNo == result[i].writer.no); // 강사님
-        str += "<div class='comment' style='border:3px solid black;'>";
+        // str += "<div class='comment' style='border:3px solid black;'>";
+          str += "<div class='my-3'>";
         str += "<span class='xx-nick'>" + '작성자 : ' + value.writer.nick + "</span><br>";
         str += "<span class='xx-comment-cont' id='xx-cont" + value.partyReplyNo + "'>" + '내용 : ' + value.commentCont + "</span><br>";
         // if (userNo == result[i].writer.no) { // 강사님
         if (sno == value.writer.no) {
-           str += "<button type='button' class='xx-updateComment' id='xx-prno-update" + value.partyReplyNo + "' name='partyReplyNo' data-prno='" + value.partyReplyNo + "' data-mno='" + value.writer.no + "'>댓글 수정</button>";
-          str += "<button type='button' class='xx-deleteComment' id='xx-prno-delete"
+           str += "<button type='button' class='btn btn-primary btn-sm xx-updateComment' id='xx-prno-update" + value.partyReplyNo + "' name='partyReplyNo' data-prno='" + value.partyReplyNo + "' data-mno='" + value.writer.no + "'>댓글 수정</button>";
+          str += "<button type='button' class='btn btn-primary btn-sm xx-deleteComment' id='xx-prno-delete"
               + value.partyReplyNo + "' data-prno='" + value.partyReplyNo
               + "' data-mno='" + value.writer.no + "'>댓글 삭제</button><br>";
         }
         str += "</div>";
+        str += "<hr style='border: 1px solid lightpink; margin-top: -1px; margin-bottom: -1px'>"
         });
         $(".xx-comment").html(str);
         //==== each 테스트 마지막

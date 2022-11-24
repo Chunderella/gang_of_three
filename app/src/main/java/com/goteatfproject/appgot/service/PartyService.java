@@ -19,7 +19,12 @@ public interface PartyService {
   //페이징
   List<Map<String, Object>> selectPartyList(Criteria criteria);
   Party get(int no) throws Exception;
+
+  // 마이페이지 파티게시글 수정
   boolean update(Party party) throws Exception;
+
+  // 파티게시판 파티게시글 수정
+  boolean update2(Party party) throws Exception;
   boolean delete(int no) throws Exception;
   AttachedFile getAttachedFile(int fileNo) throws Exception;
   boolean deleteAttachedFile(int fileNo) throws Exception;
@@ -52,6 +57,15 @@ public interface PartyService {
   // 댓글 삭제
   boolean deleteComment(int no) throws Exception;
 
-//메인페이지 게시글 노출(String 으로 값받기)
-List<Party> mainList(String meal, String food) throws Exception;
+  //메인페이지 게시글 노출
+  List<Party> mainList() throws Exception;
+
+  //메인페이지 게시글 노출(String 으로 값받기)
+  List<Party> mainList(String meal, String food) throws Exception;
+
+  //마이페이지 파티게시글 연쇄삭제
+  boolean allDelete(int no);
+
+  // 검색페이지 결과
+  List<Party> searchList(String keywordAll) throws Exception;
 }

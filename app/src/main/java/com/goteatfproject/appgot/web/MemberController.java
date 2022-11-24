@@ -1,27 +1,14 @@
 package com.goteatfproject.appgot.web;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goteatfproject.appgot.service.MemberService;
 import com.goteatfproject.appgot.vo.Member;
-import org.springframework.boot.web.server.Cookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/member")
@@ -34,13 +21,14 @@ public class MemberController {
     this.memberService = memberService;
   }
 
-  @GetMapping ("/add")
+  @GetMapping("/add")
   public String add() throws Exception {
     return "member/memberForm";
   }
 
   @PostMapping("/add")
   public String add(Member member) throws Exception {
+    System.out.println("member = " + member);
     memberService.add(member);
     return "redirect:list";
   }
@@ -51,5 +39,20 @@ public class MemberController {
     return "member/memberList";
   }
 
-}
+  // 아이디 중복체크
+  @PostMapping("/idCheck")
+  @ResponseBody
+  public int idCheck(@RequestParam("id") String id) throws Exception {
+    int cnt = memberService.idCheck(id);
+    return cnt;
+  }
 
+  // 닉네임 중복체크
+  @PostMapping("/nickCheck")
+  @ResponseBody
+  public int nickCheck(@RequestParam("nick") String nick) throws Exception {
+    int cntNick = memberService.nickCheck(nick);
+    return cntNick;
+  }
+
+}

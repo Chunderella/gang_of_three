@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter @Setter @ToString
 public class Event {
 
-  private int no; 
+  private int no;
   private String title;
   private String content;
 
@@ -26,7 +26,8 @@ public class Event {
   private Date createDate;
   private String thumbnail;
 
-  private String calrander;
+//  private String calrander;
+  private String calendar;
 
   private int cost;
 
@@ -34,6 +35,8 @@ public class Event {
   private Member writer;
 
   private List<AttachedFile> attachedFiles;
+
+  private EventComment commentList;
 
   public List<AttachedFile> getAttachedFiles() {
     return attachedFiles;

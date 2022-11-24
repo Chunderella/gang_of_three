@@ -13,7 +13,7 @@ public class AttachedFile {
   private String saveName;
   private int partyNo;
   private int eventNo;
-  private int noticeNo;
+
   public AttachedFile() {}
 
   // PartyController - attachedFiles.add(new AttachedFile(filename));

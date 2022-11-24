@@ -7,8 +7,6 @@
       <div class="col-9 ">
         <div class="row row-cols-4 p-2 g-2">
           <div class="col border rounded bg-white" th:each="party : ${parties}">
-
-
             <div id="card card-cover border p-3">
 
               <div class="header p-1">
@@ -37,11 +35,9 @@
                 <p class="card-text" th:text="'작성자 :' + ${party.writer.nick}"></p>
               </div>
 
-              <div class="card-body3 border-bottom"   data-th-text="${party.time}">
-              </div>
-
-
-
+              <div class="card-body3 border-bottom"   data-th-text="${#dates.format(party.time, 'yyyy/MMM/dd HH:mm')}"></div>
+<!--              <div class="card-body3 border-bottom"   data-th-text="${party.time}"></div>-->
+<!--              <div class="card-body3 border-bottom"   data-th-text="${#temporals.format(party.time, 'yy-MM-dd HH:mm')}"></div>-->
 
               <div class="card-body4 p-1">
                 <a th:href="@{/party/detail(no=${party.no})}" class="btn btn-primary">참여하기</a>

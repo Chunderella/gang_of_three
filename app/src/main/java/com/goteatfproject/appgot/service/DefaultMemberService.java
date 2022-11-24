@@ -13,8 +13,6 @@ public class DefaultMemberService implements MemberService {
   @Autowired
   MemberDao memberDao;
 
-
-
   @Override
   public void add(Member member) throws Exception {
     memberDao.insert(member);
@@ -61,6 +59,12 @@ public class DefaultMemberService implements MemberService {
     return memberDao.update(member) > 0;
   }
 
+  //마이페이지 개인 정보 수정(새 패스워드 없을때) -- 1120 추가
+  @Override
+  public boolean update2(Member member) throws Exception {
+    return memberDao.update2(member) > 0;
+  }
+
   // 마이페이지 회원 삭제
   @Transactional
   @Override
@@ -100,23 +104,34 @@ public class DefaultMemberService implements MemberService {
 
   // 관리자페이지 회원정보 검색
   @Override
-  public List<Member> getSearchMember(String keyword) {
+  public List<Member> getSearchMember(String keyword) throws Exception {
     return memberDao.searchMember(keyword);
   }
 
   @Override
-  public boolean memberBlock(int no) {
+  public boolean memberBlock(int no) throws Exception {
     return memberDao.memberBlock(no) > 0;
   }
 
   @Override
-  public boolean memberActive(int no) {
+  public boolean memberActive(int no) throws Exception {
     return memberDao.memberActive(no) > 0;
   }
 
-
+  //아이디 중복체크 mapper 접근
   @Override
-  public Member selectKakaoId(long kakaoId) throws Exception {
-    return memberDao.selectKakaoId(kakaoId);
+  public int idCheck(String id) throws Exception {
+    int cnt = memberDao.idCheck(id);
+    System.out.println("cnt: " + cnt);
+    return cnt;
   }
+
+  // 닉네임 중복체크 mapper 접근
+  @Override
+  public int nickCheck(String nick) throws Exception {
+    int cntNick = memberDao.nickCheck(nick);
+    System.out.println("cntNick: " + cntNick);
+    return cntNick;
+  }
+
 }

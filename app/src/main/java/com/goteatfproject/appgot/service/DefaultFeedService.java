@@ -2,8 +2,10 @@ package com.goteatfproject.appgot.service;
 
 import com.goteatfproject.appgot.dao.FeedDao;
 import com.goteatfproject.appgot.dao.PartyDao;
-import com.goteatfproject.appgot.vo.*;
-
+import com.goteatfproject.appgot.vo.Criteria;
+import com.goteatfproject.appgot.vo.Feed;
+import com.goteatfproject.appgot.vo.FeedAttachedFile;
+import com.goteatfproject.appgot.vo.Party;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,9 +73,9 @@ public class DefaultFeedService implements FeedService {
       return false;
     }
 
-    if (feed.getFeedAttachedFiles().size() > 0) {
-      feedDao.insertFiles(feed);
-    }
+//    if (feed.getFeedAttachedFiles().size() > 0) {
+//      feedDao.insertFiles(feed);
+//    }
     return true;
   }
 
@@ -110,9 +112,20 @@ public class DefaultFeedService implements FeedService {
   public boolean feedBlock(int no) {
     return feedDao.feedBlock(no) > 0;
   }
+
   @Override
   public List<Feed> mainList() throws Exception {
     return feedDao.findAllMain();
   }
-}
 
+  // 마이페이지 피드게시글 강제삭제 — 1120 추가
+  @Override
+  public boolean allDelete2(int no) {
+    return feedDao.allDelete2(no) > 0;
+  }
+
+  // 검색페이지 결과
+  public List<Party> searchList(String keywordAll) throws Exception {
+    return feedDao.findAllSearch(keywordAll);
+  }
+}

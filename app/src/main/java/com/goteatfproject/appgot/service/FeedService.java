@@ -39,4 +39,11 @@ public interface FeedService {
 
   //메인페이지 노출
   List<Feed> mainList() throws Exception;
+
+  // 마이페이지 피드게시글 강제삭제 — 1120 추가
+  boolean allDelete2(int no);
+
+  // 검색페이지 결과
+  List<Party> searchList(String keywordAll) throws Exception;
+
 }

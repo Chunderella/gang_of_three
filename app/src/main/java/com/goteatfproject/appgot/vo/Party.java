@@ -11,22 +11,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter @Setter @ToString
 public class Party {
 
-//메인 목록을 디폴트로 출력하기 위해 추가함
-  Party() {
-    this.meal=null;
-  }
-  private int no; 
-  private String meal;
-  private String food;
+
+  private int no;
+  private String meal; // 모임시간
+  private String food; // 음식종류
   private String title;
   private String content;
 //  private String nick;
   private String gender;
   private int max;
 
+//  @DateTimeFormat(pattern = "yyyy-MM-dd")
+//  @JsonProperty("time")
+//  @JsonFormat(shape= Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
+//  private LocalDateTime time;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private Date time; // 모임시간
-
   private int age;
   private int limit;
   private String location;
@@ -43,5 +43,9 @@ public class Party {
   private List<AttachedFile> attachedFiles;
 
   private Comment commentList;
+
+  Party() {
+    this.meal=null;
+  }
 
 }

@@ -1,12 +1,13 @@
 package com.goteatfproject.appgot.dao;
 
 import com.goteatfproject.appgot.vo.AttachedFile;
+import com.goteatfproject.appgot.vo.Comment;
 import com.goteatfproject.appgot.vo.Criteria;
 import com.goteatfproject.appgot.vo.Event;
+import com.goteatfproject.appgot.vo.EventComment;
+import com.goteatfproject.appgot.vo.Party;
 import java.util.List;
 import java.util.Map;
-
-import com.goteatfproject.appgot.vo.Party;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -16,10 +17,8 @@ public interface EventDao {
 
   List<Event> findAll();
 
-  
-  //페이징 처리하는 리스트
+  // 페이징 처리하는 리스트
   List<Map<String, Object>> selectEventList(Criteria cri);
-
 
   Event findByNo(int no);
 
@@ -49,9 +48,32 @@ public interface EventDao {
   //메인페이지 파티게시물 조회
   List<Event> findAllMain();
 
-  //결제 수량
+// 결제 수량
   int payCnt();
-  //결제 여부
+
   boolean ticketing(Map<String, Object> ticket);
-  
+
+  // 마이페이지 이벤트 게시글 본인 글 상세보기
+  // 사용안함
+  Event findByAdminEventListDetail(int no);
+
+  // 검색페이지 결과
+  List<Party> findAllSearch();
+
+  // 댓글 등록
+  public void insertComment(EventComment eventComment);
+
+  // 댓글 리스트 출력
+  public List<Comment> selectCommentList(EventComment eventComment);
+
+  // 댓글 수정
+  int updateComment(EventComment eventComment);
+
+  // 댓글 삭제
+  int deleteComment(int no);
+
+  // 검색페이지 결과
+  List<Party> findAllSearch(String keywordAll);
+
+  public void updateEventCount(int no);
 }
