@@ -3,20 +3,23 @@ bitcamp got project
 
 ## <GOf4 회의록>
 
-#프로젝트 기간 : 10-25 ~ 11-25 (30일)
-
 #프로젝트 주제 
 음식이라는 주제에 재미를 더하여 "혼밥"이라는 키워드를 메인키워드로 잡고 
 '혼자 밥을 먹음으로써 생기는 불편함'을 해결할 수 있는 프로젝트를 구상
 
+#프로젝트 기간 : 10-25 ~ 11-25 (30일)
+
+#프로젝트 스케줄 
+![image](https://user-images.githubusercontent.com/108327814/204872840-bfe476a8-6e90-4cee-a0cc-944c9c4b1f74.png)
+
 #프로젝트 진행 
 
-1. Use-case 작성
-![image](https://user-images.githubusercontent.com/108327814/204871027-ecf52993-b0db-41b1-a793-d4df4eb3bfef.png)
 
-
-2. 이를 토대로 UI 프로토 타입 작성(피그마)
+1. 이를 토대로 UI 프로토 타입 작성(피그마)
  ![image](https://user-images.githubusercontent.com/108327814/204870780-5878f343-33f9-453b-bfb4-68829949b99f.png)
+ 
+ 2. Use-case 작성
+![image](https://user-images.githubusercontent.com/108327814/204871027-ecf52993-b0db-41b1-a793-d4df4eb3bfef.png)
  
  
 3. EXERD를 통한 데이터 모델링 및 더미 데이터 입력
@@ -24,6 +27,7 @@ bitcamp got project
 
 
 4. 메인페이지 및 기본 UI 작업
+
 ![image](https://user-images.githubusercontent.com/108327814/204871171-94af4ecd-5600-4939-b7bb-e7a4b0aea07b.png)
 
 
@@ -38,6 +42,13 @@ bitcamp got project
 ![image](https://user-images.githubusercontent.com/108327814/204871438-84cc3eea-500f-4cbf-81c9-0c0b74ef5165.png)
 
 ![image](https://user-images.githubusercontent.com/108327814/204871508-46ddc519-7c93-4e1a-9a18-e025e38d8117.png)
+
+6-1. 기능 추가
+
+![image](https://user-images.githubusercontent.com/108327814/204873208-ba4966fd-daa7-4a10-bff7-d5d6e24bf5d9.png)
+
+![image](https://user-images.githubusercontent.com/108327814/204873278-7b46c50a-60ed-4a2a-9867-18db00492c16.png)
+
 
 7. 해당 게시판의 기능들을 종합하여 마이페이지, 관리자페이지 구현
 
