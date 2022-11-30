@@ -426,7 +426,6 @@
     <if test="meal != 'all'">
       and p.meal = #{meal}
     </if>
-
     order by
     pno desc
     limit 8
