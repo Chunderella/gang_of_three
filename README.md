@@ -3,68 +3,57 @@ bitcamp got project
 
 ## <GOf4 회의록>
 
-일시: 2022-11-04 금
+#프로젝트 주제 
+음식이라는 주제에 재미를 더하여 "혼밥"이라는 키워드를 메인키워드로 잡고 
+'혼자 밥을 먹음으로써 생기는 불편함'을 해결할 수 있는 프로젝트를 구상
 
-참석: 김라윤 장슬기 김봉경 신우섭
+#프로젝트 기간 : 10-25 ~ 11-25 (30일)
 
-———————
-회원 테이블 
+#프로젝트 스케줄 
+![image](https://user-images.githubusercontent.com/108327814/204872840-bfe476a8-6e90-4cee-a0cc-944c9c4b1f74.png)
 
-등록일: 
+#프로젝트 진행 
+
+
+1. 이를 토대로 UI 프로토 타입 작성(피그마)
+ ![image](https://user-images.githubusercontent.com/108327814/204870780-5878f343-33f9-453b-bfb4-68829949b99f.png)
  
-- createdDate ->  createddate
+ 2. Use-case 작성
+![image](https://user-images.githubusercontent.com/108327814/204871027-ecf52993-b0db-41b1-a793-d4df4eb3bfef.png)
+ 
+ 
+3. EXERD를 통한 데이터 모델링 및 더미 데이터 입력
+![image](https://user-images.githubusercontent.com/108327814/204871092-36c6241c-6a55-4ee2-a4b0-a148f907181c.png)
 
-———————
-파티모집 테이블
 
-인원제한 : 
+4. 메인페이지 및 기본 UI 작업
 
-- limit -> lit
+![image](https://user-images.githubusercontent.com/108327814/204871171-94af4ecd-5600-4939-b7bb-e7a4b0aea07b.png)
 
-공개여부: 
 
-- public -> pub
+5. 메인 서비스(파티게시판, 로그인 및 회원 가입 기능) 구현
 
-내용: 
-- 데이터타입 변경_ varchar(200) -> MEDIUMTEXT
+![image](https://user-images.githubusercontent.com/108327814/204871312-1386e70e-b003-45de-bc11-0b9205a505ef.png)
 
-———————
-파티원모집 테이블
+![image](https://user-images.githubusercontent.com/108327814/204871327-fadf405c-8de9-48de-80e3-4927a9a233ae.png)
 
-대표이미지: 
+6.피드, 이벤트 게시판 CRUD 구현
 
-- 파티에 테이블에 묶어서 저장 
-- 
-- 회원이 등록할 시 회원이 등록한 이미지로 연결
-- 
-- 등록 안 할 시: 이미지 한 장을 임의로 집어 넣겠다 - 관리자
+![image](https://user-images.githubusercontent.com/108327814/204871438-84cc3eea-500f-4cbf-81c9-0c0b74ef5165.png)
 
-=> 불러오는 방법을 알아본 후 추후 확인 필요
+![image](https://user-images.githubusercontent.com/108327814/204871508-46ddc519-7c93-4e1a-9a18-e025e38d8117.png)
 
-———————
-팔로우 테이블
+6-1. 기능 추가
 
-- 팔로우: 마이페이지_팔로우 관리 게시판 연계 추후 확인 필요
+![image](https://user-images.githubusercontent.com/108327814/204873208-ba4966fd-daa7-4a10-bff7-d5d6e24bf5d9.png)
 
-———————
-좋아요 테이블 
+![image](https://user-images.githubusercontent.com/108327814/204873278-7b46c50a-60ed-4a2a-9867-18db00492c16.png)
 
-- 테이블 삭제  -> 아이콘 + 카운팅 으로 변경
 
-———————
-피드 테이블
+7. 해당 게시판의 기능들을 종합하여 마이페이지, 관리자페이지 구현
 
-- 좋아요 컬럼 삭제
-- 
-- 대표 이미지 컬럼 추가
+![image](https://user-images.githubusercontent.com/108327814/204871573-2604ce1b-a937-4e92-a8b8-85f9eb610beb.png)
 
-———————
-입장권구매
+![image](https://user-images.githubusercontent.com/108327814/204871577-b1466a00-bacb-4f99-a28e-189b0b94977c.png)
 
-- 결제취소 boolean : 기본값 0_ 취소안함 / 1_ 취소
-
-———————
--
-=> 데이터 타입 boolean : 기본값 0으로 수정
-
-=> 공개여부 boolean : 0_공개 / 1_ 비공개 
+8. 테스트 및 디버깅
