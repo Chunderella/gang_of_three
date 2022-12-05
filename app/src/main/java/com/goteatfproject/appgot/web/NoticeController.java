@@ -45,7 +45,7 @@ public class NoticeController {
     return "redirect:list";
   }
 
-  // 파티 게시판 페이징 적용
+  // 이벤트 게시판 리스트
   @GetMapping("list")
   @ResponseBody
   public ModelAndView selectNoticeList(Notice notice, Criteria cri) throws Exception {

@@ -45,7 +45,7 @@ public class EventController {
     this.sc = sc;
   }
 
-  // 파티 게시판 페이징 적용
+  // 이벤트 게시판 페이징 적용
   @GetMapping("list")
   @ResponseBody
   public ModelAndView selectEventList(Event event, Criteria cri) throws Exception {
@@ -300,7 +300,7 @@ public class EventController {
   private void checkOwner2(HttpSession session, EventComment eventComment) throws Exception {
     Member loginMember = (Member) session.getAttribute("loginMember");
     // 개인이해메모
-    // getWriter().getNo() != loginMember.getNo() // 로그인 멤버no 꺼내서 party에 있는 Member writer 이용해서 일치여부 확인
+    // getWriter().getNo() != loginMember.getNo() // 로그인 멤버no 꺼내서 Member writer 이용해서 일치여부 확인
     // 방향 ----->
     // 넘어온 댓글 멤버번호 != 세션 멤버번호
     if (eventComment.getMemberNo() != loginMember.getNo()) {

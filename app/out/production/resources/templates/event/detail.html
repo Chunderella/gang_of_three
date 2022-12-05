@@ -266,8 +266,13 @@
 
     $.ajax({
       url : "/event/ticketing",
+<<<<<<< HEAD
       type : 'post',
       data : JSON.stringify(ticket),
+=======
+      type : 'GET',
+      data : ticket,
+>>>>>>> 8edfcde03d19390291a2f5eda5d3ec281aae12dc
       contentType:'application/json; charset=UTF-8' ,
       success:function (result){
         if(result == "1"){

@@ -11,7 +11,11 @@ public class Criteria {
 
   public Criteria() {
     this.page = 1;
+<<<<<<< HEAD
     this.perPageNum = 10;
+=======
+    this.perPageNum = 6;
+>>>>>>> 8edfcde03d19390291a2f5eda5d3ec281aae12dc
   }
 
   public int getPage() {

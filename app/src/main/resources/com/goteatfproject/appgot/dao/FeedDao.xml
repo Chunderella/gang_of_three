@@ -301,7 +301,7 @@
     where fno = #{no}
   </update>
 
-  <!-- 간치 -->
+  <!-- 피드 메인리스트 -->
   <select id="findAllMain" resultMap="feedMap">
     select
     f.fno,
