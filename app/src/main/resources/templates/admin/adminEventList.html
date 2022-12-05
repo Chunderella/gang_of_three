@@ -74,8 +74,7 @@
         </tr>
         </tbody>
       </table>
-        <button type="button" class="btn btn-outline-secondary" value="비활성화" onclick="eventBlock()">삭제</button>
-        <button type="button" class="btn btn-outline-secondary" value="비활성화" onclick="eventBlock()">수정</button>
+        <button type="button" class="btn btn-outline-secondary" value="비활성화" onclick="eventBlock()">비활성화</button>
         <button type="button" onclick="location.href='/event/form'" class="btn btn-outline-secondary">게시글 등록</button>
       </form>
 
@@ -134,7 +133,7 @@ function eventBlock(){
 			  checkedValue.push($(this).val());
 		  }
 		});
-	  
+
 	  console.log(checkedValue);
 	  eventBlockAjax();
 }

@@ -54,7 +54,7 @@ public class EventController {
 
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
-    pageMaker.setTotalCount(10);
+    pageMaker.setTotalCount(26);
 
     List<Map<String, Object>> list = eventService.selectEventList(cri);
     mv.addObject("list", list);
@@ -207,16 +207,16 @@ public class EventController {
 
 
   //결제정보를 받아오는 컨트롤러
+  @PostMapping("ticketing")
   @ResponseBody
-  @GetMapping("ticketing")
-  public String ticketing(@RequestParam HashMap<String, Object> map, HttpSession session) {
+  public String ticketing(@RequestBody HashMap<String, Object> map, HttpSession session) {
 
     Member member = (Member) session.getAttribute("loginMember");
 
     map.put("mno",member.getNo());
     System.out.println(map);
-//    System.out.println(map.get("eno"));
-//    System.out.println(map.get("paycnt"));
+    System.out.println(map.get("eno"));
+    System.out.println(map.get("paycnt"));
     boolean result = false;
 
     result = eventService.ticketing(map);

@@ -88,6 +88,7 @@
   
   join member m on e.mno = m.mno
   where e.pub = false
+
    order by
       eno desc
       LIMIT #{pageStart}, #{perPageNum}

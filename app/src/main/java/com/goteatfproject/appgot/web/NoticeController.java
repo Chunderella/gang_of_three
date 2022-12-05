@@ -54,7 +54,7 @@ public class NoticeController {
 
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
-    pageMaker.setTotalCount(10);
+    pageMaker.setTotalCount(18);
 
     List<Map<String, Object>> list = noticeService.selectNoticeList(cri);
     mv.addObject("list", list);
